@@ -1,0 +1,190 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:DataImport.Interactive.Controls" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    x:Class="DataImport.Interactive.DataScriptInteractive2.DataScriptInfo" 
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Foreground" Value="#6e6e6e"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="22"></Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"/>
+            <RowDefinition/>
+            <RowDefinition Height="40px"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Image Source="/DataImport.Interactive;component/Resources/Buttons/msg.png" Height="13" HorizontalAlignment="Left" Margin="8 0" ></Image>
+            <TextBlock HorizontalAlignment="Left" Text="编辑解析器信息" Foreground="#d6d6d6" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+        </Grid>
+        <Grid x:Name="container" Grid.Row="1" Background="#414141">
+
+            <StackPanel Orientation="Vertical">
+
+                <Border Background="#757575">
+                    <TextBlock Text="解析器基本信息" HorizontalAlignment="Left" Foreground="White"></TextBlock>
+                </Border>
+                <Grid VerticalAlignment="Top" Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="0" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!--第0行-->
+                    <TextBlock Grid.Column="0" Grid.Row="0"><Run Text="项目"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="0"><Run Text="实验名称"/></TextBlock>
+                    <TextBlock Grid.Column="4" Grid.Row="1"><Run Text="解析器类型"/></TextBlock>
+
+                    <ComboBox  Name="ProjectCode" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" SelectedIndex="0" SelectionChanged="ProjectCode_SelectionChanged"  ></ComboBox>
+                    <TextBox Margin="5 0 0 0" Name="TaskName" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Center"  Text="" TextChanged="TaskName_TextChanged"/>
+                    <ComboBox SelectionChanged="TaskNameList_SelectionChanged" Name="TaskNameList" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" SelectedIndex="0" ></ComboBox>
+                    
+                    <ComboBox  Name="ScriptType" Grid.Column="5" SelectedIndex="0" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="ScriptType_SelectionChanged">
+                        <System:String>上位机</System:String>
+                        <System:String>模型机</System:String>
+                        <System:String>设备机</System:String>
+                        <System:String>其它</System:String>
+                    </ComboBox>
+                    <!--第一行-->
+                    <TextBlock Grid.Column="0" Grid.Row="1"><Run Text="解析器编码"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="1"><Run Text="解析器名称"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="2"><Run Text="解析器版本"/></TextBlock>
+
+                    <TextBox IsReadOnly="true" Name="MidsScriptCode" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"  Text=""/>
+                    <TextBox Name="MidsScriptName"  Grid.Column="3" Grid.Row="1" VerticalAlignment="Center"  Text=""/>
+                    <TextBox Name="MidsScriptVesion" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center"  Text="1.0"/>
+
+                    <!--第二行-->
+
+                    <TextBlock Grid.Column="0" Grid.Row="2"><Run Text="文件类型"/></TextBlock>
+                    <TextBlock Grid.Column="4" Grid.Row="2"><Run Text="检索关键字"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="3"><Run Text="有效性"/></TextBlock>
+
+                    <ComboBox Name="FileType" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" SelectedIndex="0" SelectionChanged="FileType_SelectionChanged"  >
+                        <System:String  >txt</System:String>
+                        <System:String >xls/xlsx</System:String>
+                        <System:String >mdb</System:String>
+                        <System:String >dat</System:String>
+                        <System:String >fws10</System:String>
+                    </ComboBox>
+                    <TextBox  Name="IndexKey" Grid.Column="5" Grid.Row="2" VerticalAlignment="Center"  Text=""/>
+                    <TextBox Name="ValidFlag" Grid.Column="3" Grid.Row="3" VerticalAlignment="Center"  Text=""/>
+
+                    <!--第三行-->
+                    <TextBlock Grid.Column="0" Grid.Row="3"><Run Text="适用试验"/></TextBlock>
+                   
+                    <TextBlock Grid.Column="4" Grid.Row="3"><Run Text="备注"/></TextBlock>
+
+                    <ComboBox  Name="ApplyTestProject" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
+                        <System:String>半物理仿真试验</System:String>
+                        <System:String>筛选试验</System:String>
+                        <System:String>可靠性试验</System:String>
+                    </ComboBox>
+ 
+
+                    <TextBox Name="Remark"  Grid.Column="5"  Grid.Row="3" VerticalAlignment="Center"  Text=""  />
+                </Grid>
+                <Border Background="#757575">
+                    <TextBlock Text="分隔符配置" HorizontalAlignment="Left"  Foreground="White"></TextBlock>
+                </Border>
+                <Grid VerticalAlignment="Top" Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--第一行-->
+                    <TextBlock Grid.Column="0" Grid.Row="0"><Run Text="列名位置"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="0"><Run Text="数据起始行"/></TextBlock>
+                    <TextBlock Grid.Column="4" Grid.Row="0" Visibility="Hidden"><Run Text="行分隔符"  /></TextBlock>
+
+                    <TextBox Name="ColName_Lines" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"  Text="1"/>
+                    <TextBox Name="Data_Lines"  Grid.Column="3" Grid.Row="0" VerticalAlignment="Center"  Text="2"/>
+                    <TextBox Visibility="Hidden" Name="Line_Seperator" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center"  Text=""/>
+
+                    <!--第二行-->
+                    <TextBlock Grid.Column="0" Grid.Row="1"><Run Text="列分隔符"/></TextBlock>
+                    <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="1">
+                        <RadioButton Margin="0 0 10 0" Name="rbTab" VerticalAlignment="Center" Foreground="White" >Tab</RadioButton>
+                        <RadioButton Margin="0 0 10 0" Name="rbComma" VerticalAlignment="Center" Foreground="White" IsChecked="True">逗号</RadioButton>
+                        <RadioButton Name="rbSemicolon" VerticalAlignment="Center" Foreground="White">分号</RadioButton>
+                        <RadioButton Name="rbSpace" VerticalAlignment="Center" Foreground="White">空格</RadioButton>
+                    </StackPanel>
+                </Grid>
+
+                <Border Background="#757575">
+                    <TextBlock Text="数据表 / 样例文件" HorizontalAlignment="Left" Foreground="White"></TextBlock>
+                </Border>
+
+                <Grid VerticalAlignment="Top" Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/> 
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--第一行-->
+                    <TextBlock Visibility="Hidden" Grid.Column="4" Grid.Row="0"><Run Text="选择主键"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="0"><Run Text="表"/></TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="0"><Run Text="样例文件"/></TextBlock>
+
+                    <ComboBox Visibility="Hidden"  Name="PK" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center"></ComboBox>
+                    <TextBox  Name="txtTemplageFile" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"  Text="" Margin="0 0 25 0" Grid.ColumnSpan="1"/>
+                    <TextBox   Name="txtTableName" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center"  Text="" IsEnabled="False" />
+                    <Image Name="openTemplateFile" MouseLeftButtonDown="openTemplateFile_MouseLeftButtonDown"  Margin="0 0 5 0" Cursor="Hand" Grid.Column="1" Grid.Row="0"  Height="11" HorizontalAlignment="Right" VerticalAlignment="Center" Source="/DataImport.Interactive;component/Resources/Buttons/open.png"></Image>
+                </Grid>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                <Button Name="prvButton" Click="prvButton_Click"    HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" >
+                    上一步
+                </Button>
+                <Button Name="nextButton" Click="nextButton_Click"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" >
+                下一步
+            </Button>
+           
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

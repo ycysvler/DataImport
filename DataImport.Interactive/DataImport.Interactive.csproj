@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FDF1B3A7-4C20-4981-800E-D54BFFBA5FF2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataImport.Interactive</RootNamespace>
+    <AssemblyName>DataImport.Interactive</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\IronPython 2.7\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\IronPython 2.7\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\dll\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\IronPython 2.7\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\IronPython 2.7\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\IronPython 2.7\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.18.3.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="PresentationFramework.Classic" />
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="teechart.wpf">
+      <HintPath>..\dll\teechart.wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFVisifire.Charts">
+      <HintPath>..\dll\WPFVisifire.Charts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BatchInteractive\BetchImport.xaml.cs">
+      <DependentUpon>BetchImport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BatchInteractive\BetchItem.xaml.cs">
+      <DependentUpon>BetchItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BatchInteractive\BetchLogic.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Controls\ChartDateItem.xaml.cs">
+      <DependentUpon>ChartDateItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InputDataItem.xaml.cs">
+      <DependentUpon>InputDataItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LineConfigDialog.xaml.cs">
+      <DependentUpon>LineConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProtocolView.xaml.cs">
+      <DependentUpon>ProtocolView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RealDataGroup.xaml.cs">
+      <DependentUpon>RealDataGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RealDataItem.xaml.cs">
+      <DependentUpon>RealDataItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TargetSelectDialog.xaml.cs">
+      <DependentUpon>TargetSelectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskTab.xaml.cs">
+      <DependentUpon>TaskTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxExt.cs" />
+    <Compile Include="Controls\TreeNodeView.xaml.cs">
+      <DependentUpon>TreeNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataImportInteractive\DataScriptInfo.xaml.cs">
+      <DependentUpon>DataScriptInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataImportInteractive\ImportDataGrid.xaml.cs">
+      <DependentUpon>ImportDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataImportInteractive\ImportFileSelecte.xaml.cs">
+      <DependentUpon>ImportFileSelecte.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataImportInteractive\ImportMapModify.xaml.cs">
+      <DependentUpon>ImportMapModify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataImportInteractive\ImportRun.xaml.cs">
+      <DependentUpon>ImportRun.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataImportInteractive\ProjectList.xaml.cs">
+      <DependentUpon>ProjectList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataScriptInteractive2\DataScriptInfo.xaml.cs">
+      <DependentUpon>DataScriptInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataScriptInteractive\DataScriptInfo.xaml.cs">
+      <DependentUpon>DataScriptInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataScriptInteractive\DataScriptMapModify.xaml.cs">
+      <DependentUpon>DataScriptMapModify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImportStack.cs" />
+    <Compile Include="MdbAdapter\MdbAdapterPage.xaml.cs">
+      <DependentUpon>MdbAdapterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\ChartDataView.xaml.cs">
+      <DependentUpon>ChartDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\ChartView.xaml.cs">
+      <DependentUpon>ChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\PopWindow.xaml.cs">
+      <DependentUpon>PopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\Protocols.xaml.cs">
+      <DependentUpon>Protocols.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\RealDataView.xaml.cs">
+      <DependentUpon>RealDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\SequencesView.xaml.cs">
+      <DependentUpon>SequencesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\SequenceTree.xaml.cs">
+      <DependentUpon>SequenceTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequences\StopWindow.xaml.cs">
+      <DependentUpon>StopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaskCenter.cs" />
+    <Compile Include="TaskInfoInteractive\ResolverPopWindow.xaml.cs">
+      <DependentUpon>ResolverPopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaskInfoInteractive\TaskInfoGrid.xaml.cs">
+      <DependentUpon>TaskInfoGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaskInfoInteractive\TaskInfoGroup.xaml.cs">
+      <DependentUpon>TaskInfoGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaskInfoInteractive\TaskInfoList.xaml.cs">
+      <DependentUpon>TaskInfoList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaskInfoInteractive\TaskProgressList.xaml.cs">
+      <DependentUpon>TaskProgressList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Page Include="BatchInteractive\BetchImport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BatchInteractive\BetchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ChartDateItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ColumnConnection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ColumnSourceItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ColumnTargetItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FuncMenus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\InputDataItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LineConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProtocolView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RealDataGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RealDataItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TargetSelectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TaskTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TreeNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataImportInteractive\DataScriptInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataImportInteractive\ImportDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataImportInteractive\ImportFileSelecte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataImportInteractive\ImportMapModify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataImportInteractive\ImportRun.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataImportInteractive\ProjectList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataScriptInteractive2\DataScriptInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataScriptInteractive\DataScriptInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataScriptInteractive\DataScriptList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataScriptInteractive\DataScriptMapModify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\ColumnConnection.xaml.cs">
+      <DependentUpon>ColumnConnection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColumnSourceItem.xaml.cs">
+      <DependentUpon>ColumnSourceItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColumnTargetItem.xaml.cs">
+      <DependentUpon>ColumnTargetItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FuncMenus.xaml.cs">
+      <DependentUpon>FuncMenus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataScriptInteractive\DataScriptList.xaml.cs">
+      <DependentUpon>DataScriptList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MdbAdapter\MdbAdapterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\ChartDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\ChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\PopWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\Protocols.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\RealDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\SequencesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\SequenceTree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sequences\StopWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaskInfoInteractive\ResolverPopWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaskInfoInteractive\TaskInfoGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaskInfoInteractive\TaskInfoGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaskInfoInteractive\TaskInfoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaskInfoInteractive\TaskProgressList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\button.png" />
+    <Resource Include="Resources\Buttons\close.png" />
+    <Resource Include="Resources\Buttons\file.png" />
+    <Resource Include="Resources\Buttons\max.png" />
+    <Resource Include="Resources\Buttons\min.png" />
+    <Resource Include="Resources\Buttons\msg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\Funcs\func_menu_1.png" />
+    <Resource Include="Resources\Buttons\Funcs\func_menu_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataImport.BLL\DataImport.BLL.csproj">
+      <Project>{2ff4544d-9598-4d72-9897-b2f3a2c70f63}</Project>
+      <Name>DataImport.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataImport.DataAccess\DataImport.DataAccess.csproj">
+      <Project>{483302cd-bc48-43e9-8463-5ab1a001a647}</Project>
+      <Name>DataImport.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HyCommBase\HyCommBase.csproj">
+      <Project>{039953e0-f399-4330-a865-6da01a0c02ca}</Project>
+      <Name>HyCommBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HyUtilities\HyUtilities.csproj">
+      <Project>{cbffd85e-00f9-476a-a6f2-6e33a28b2fd4}</Project>
+      <Name>HyUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TcpClientTest\TcpClientTest.csproj">
+      <Project>{0f42b3cf-7d8c-4742-8f42-b4b71ef70199}</Project>
+      <Name>TcpClientTest</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\modify.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\Funcs\func_menu_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\button_disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\Funcs\func_menu_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\Funcs\func_menu_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\arrow564.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\step.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_add.png" />
+    <Resource Include="Resources\icon_sub.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

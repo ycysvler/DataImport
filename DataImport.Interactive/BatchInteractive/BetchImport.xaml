@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="DataImport.Interactive.BatchInteractive.BetchImport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataImport.Interactive.BatchInteractive"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"/>
+            <RowDefinition/>
+           
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Image Source="/DataImport.Interactive;component/Resources/Buttons/msg.png" Height="13" HorizontalAlignment="Left" Margin="8 0" ></Image>
+            <TextBlock Name="title" HorizontalAlignment="Left" Text="选择数据文件存放文件夹，批量导入数据" Foreground="#d6d6d6" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+            <Button x:Name="addButton"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Content="选择文件夹" Click="addButton_Click" />
+        </Grid>
+        <Grid Grid.Row="1" Background="#414141" >
+            <ScrollViewer >
+            <StackPanel Name="panel" Orientation="Vertical" >
+                
+                
+            </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

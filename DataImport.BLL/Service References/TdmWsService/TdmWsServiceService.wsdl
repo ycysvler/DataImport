@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://tdmWsService.webservice.cape.avicit/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TdmWsServiceService" targetNamespace="http://tdmWsService.webservice.cape.avicit/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://tdmWsService.webservice.cape.avicit/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getPyParseInfo" type="tns:getPyParseInfo" />
+      <xs:element name="getPyParseInfoResponse" type="tns:getPyParseInfoResponse" />
+      <xs:element name="getTechDocumentInfo" type="tns:getTechDocumentInfo" />
+      <xs:element name="getTechDocumentInfoResponse" type="tns:getTechDocumentInfoResponse" />
+      <xs:complexType name="getPyParseInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getPyParseInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getTechDocumentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="taskId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getTechDocumentInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getTechDocumentInfoResponse">
+    <wsdl:part name="parameters" element="tns:getTechDocumentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPyParseInfo">
+    <wsdl:part name="parameters" element="tns:getPyParseInfo" />
+  </wsdl:message>
+  <wsdl:message name="getTechDocumentInfo">
+    <wsdl:part name="parameters" element="tns:getTechDocumentInfo" />
+  </wsdl:message>
+  <wsdl:message name="getPyParseInfoResponse">
+    <wsdl:part name="parameters" element="tns:getPyParseInfoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TdmWsService">
+    <wsdl:operation name="getPyParseInfo">
+      <wsdl:input name="getPyParseInfo" message="tns:getPyParseInfo" />
+      <wsdl:output name="getPyParseInfoResponse" message="tns:getPyParseInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTechDocumentInfo">
+      <wsdl:input name="getTechDocumentInfo" message="tns:getTechDocumentInfo" />
+      <wsdl:output name="getTechDocumentInfoResponse" message="tns:getTechDocumentInfoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TdmWsServiceServiceSoapBinding" type="tns:TdmWsService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPyParseInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getPyParseInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getPyParseInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTechDocumentInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getTechDocumentInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getTechDocumentInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TdmWsServiceService">
+    <wsdl:port name="TdmWsServicePort" binding="tns:TdmWsServiceServiceSoapBinding">
+      <soap:address location="http://localhost:8080/mpm_v6_tdm_webservice/services/tdmWsService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

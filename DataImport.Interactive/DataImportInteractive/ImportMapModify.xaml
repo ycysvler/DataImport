@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="DataImport.Interactive.DataImportInteractive.ImportMapModify"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"   xmlns:Controls="clr-namespace:DataImport.Interactive.Controls" 
+             d:DesignHeight="300" d:DesignWidth="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"/>
+            <RowDefinition Height="40px"/>
+            <RowDefinition/>
+            <RowDefinition Height="40px"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Image Source="/DataImport.Interactive;component/Resources/Buttons/msg.png" Height="13" HorizontalAlignment="Left" Margin="8 0" ></Image>
+            <TextBlock HorizontalAlignment="Left" Text="从左向右连线，配置数据对应导入关系。点击已配置的线可删除。" Foreground="#d6d6d6" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+        </Grid>
+        
+        <Border  Grid.Row="1" Background="#414141" BorderThickness="0 0 0 3" BorderBrush="#aaaaaa">
+            <Grid>
+                <TextBlock Text="数据列名称" VerticalAlignment="Center" Margin="30 0" Foreground="#aaaaaa"></TextBlock>
+                <TextBlock Text="示例数据" VerticalAlignment="Center" Margin="200 0" Foreground="#aaaaaa"></TextBlock>
+                <TextBlock Text="业务主键" VerticalAlignment="Center" Margin="550 0 0 0" Foreground="#aaaaaa" Visibility="Hidden"></TextBlock>
+                <TextBlock Text="必填" VerticalAlignment="Center" Margin="720 0 0 0" Foreground="#aaaaaa"></TextBlock>
+                <TextBlock Text="字段名" VerticalAlignment="Center" Margin="600 0 0 0" Foreground="#aaaaaa"></TextBlock>
+                <TextBlock Text="数据类型" VerticalAlignment="Center" Margin="765 0 0 0" Foreground="#aaaaaa"></TextBlock>
+                <TextBlock Text="说明" VerticalAlignment="Center" Margin="890 0 0 0" Foreground="#aaaaaa"></TextBlock>
+
+            </Grid>
+        </Border>
+        <Grid x:Name="container" Grid.Row="2" Background="#414141">
+            <Controls:ColumnConnection x:Name="columnConnection" />
+            <Grid Visibility="Collapsed" Background="White" Opacity="0.01" Margin="0 0 20 0"></Grid>
+            <!--<Controls:TargetSelectDialog x:Name="targetDialog"  />-->
+        </Grid>
+        <Grid Grid.Row="3">
+            <Button Name="btnPrv" Click="btnPrv_Click"  Margin="0 0 140 0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" >
+                上一步
+            </Button>
+            <Button Name="btnNext" Click="btnNext_Click"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" >
+                下一步
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

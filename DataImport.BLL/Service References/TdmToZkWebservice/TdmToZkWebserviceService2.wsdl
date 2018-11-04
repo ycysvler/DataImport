@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://tdmToZkWebservice.webservice.cape.avicit/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TdmToZkWebserviceService" targetNamespace="http://tdmToZkWebservice.webservice.cape.avicit/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://tdmToZkWebservice.webservice.cape.avicit/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addAtachFileInfo2Tdm" type="tns:addAtachFileInfo2Tdm" />
+      <xs:element name="addAtachFileInfo2TdmResponse" type="tns:addAtachFileInfo2TdmResponse" />
+      <xs:element name="equipmentState" type="tns:equipmentState" />
+      <xs:element name="equipmentStateResponse" type="tns:equipmentStateResponse" />
+      <xs:element name="listTdmProjectInfo" type="tns:listTdmProjectInfo" />
+      <xs:element name="listTdmProjectInfoResponse" type="tns:listTdmProjectInfoResponse" />
+      <xs:element name="listTdmTasks" type="tns:listTdmTasks" />
+      <xs:element name="listTdmTasksResponse" type="tns:listTdmTasksResponse" />
+      <xs:element name="modifyActualDate" type="tns:modifyActualDate" />
+      <xs:element name="modifyActualDateResponse" type="tns:modifyActualDateResponse" />
+      <xs:element name="modifyTdmDeliveryListState" type="tns:modifyTdmDeliveryListState" />
+      <xs:element name="modifyTdmDeliveryListStateResponse" type="tns:modifyTdmDeliveryListStateResponse" />
+      <xs:element name="taskReportByClient" type="tns:taskReportByClient" />
+      <xs:element name="taskReportByClientResponse" type="tns:taskReportByClientResponse" />
+      <xs:element name="updateTdmTaskState" type="tns:updateTdmTaskState" />
+      <xs:element name="updateTdmTaskStateResponse" type="tns:updateTdmTaskStateResponse" />
+      <xs:element name="validateUserInfo" type="tns:validateUserInfo" />
+      <xs:element name="validateUserInfoResponse" type="tns:validateUserInfoResponse" />
+      <xs:element name="verificationReportState" type="tns:verificationReportState" />
+      <xs:element name="verificationReportStateResponse" type="tns:verificationReportStateResponse" />
+      <xs:complexType name="addAtachFileInfo2Tdm">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="attName" type="xs:string" />
+          <xs:element minOccurs="0" name="size" type="xs:string" />
+          <xs:element minOccurs="0" name="path" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addAtachFileInfo2TdmResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="validateUserInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="loginName" type="xs:string" />
+          <xs:element minOccurs="0" name="password" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="validateUserInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="equipmentState">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="resourceArea" type="xs:string" />
+          <xs:element minOccurs="0" name="resourceCode" type="xs:string" />
+          <xs:element minOccurs="0" name="resourceName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="equipmentStateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listTdmProjectInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="loginName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listTdmProjectInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="modifyActualDate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="actualSDate" type="xs:string" />
+          <xs:element minOccurs="0" name="actualEDate" type="xs:string" />
+          <xs:element minOccurs="0" name="actualWorkHours" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="modifyActualDateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="modifyTdmDeliveryListState">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="modifyTdmDeliveryListStateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateTdmTaskState">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="taskIds" type="xs:string" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+          <xs:element minOccurs="0" name="loginName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateTdmTaskStateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="taskReportByClient">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="taskReportByClientResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verificationReportState">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verificationReportStateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listTdmTasks">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="loginName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listTdmTasksResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="listTdmProjectInfoResponse">
+    <wsdl:part name="parameters" element="tns:listTdmProjectInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="modifyTdmDeliveryListStateResponse">
+    <wsdl:part name="parameters" element="tns:modifyTdmDeliveryListStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="modifyActualDateResponse">
+    <wsdl:part name="parameters" element="tns:modifyActualDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="verificationReportStateResponse">
+    <wsdl:part name="parameters" element="tns:verificationReportStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="addAtachFileInfo2TdmResponse">
+    <wsdl:part name="parameters" element="tns:addAtachFileInfo2TdmResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateTdmTaskState">
+    <wsdl:part name="parameters" element="tns:updateTdmTaskState" />
+  </wsdl:message>
+  <wsdl:message name="taskReportByClient">
+    <wsdl:part name="parameters" element="tns:taskReportByClient" />
+  </wsdl:message>
+  <wsdl:message name="listTdmProjectInfo">
+    <wsdl:part name="parameters" element="tns:listTdmProjectInfo" />
+  </wsdl:message>
+  <wsdl:message name="listTdmTasksResponse">
+    <wsdl:part name="parameters" element="tns:listTdmTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="equipmentState">
+    <wsdl:part name="parameters" element="tns:equipmentState" />
+  </wsdl:message>
+  <wsdl:message name="verificationReportState">
+    <wsdl:part name="parameters" element="tns:verificationReportState" />
+  </wsdl:message>
+  <wsdl:message name="addAtachFileInfo2Tdm">
+    <wsdl:part name="parameters" element="tns:addAtachFileInfo2Tdm" />
+  </wsdl:message>
+  <wsdl:message name="listTdmTasks">
+    <wsdl:part name="parameters" element="tns:listTdmTasks" />
+  </wsdl:message>
+  <wsdl:message name="modifyActualDate">
+    <wsdl:part name="parameters" element="tns:modifyActualDate" />
+  </wsdl:message>
+  <wsdl:message name="updateTdmTaskStateResponse">
+    <wsdl:part name="parameters" element="tns:updateTdmTaskStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="validateUserInfo">
+    <wsdl:part name="parameters" element="tns:validateUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="validateUserInfoResponse">
+    <wsdl:part name="parameters" element="tns:validateUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="modifyTdmDeliveryListState">
+    <wsdl:part name="parameters" element="tns:modifyTdmDeliveryListState" />
+  </wsdl:message>
+  <wsdl:message name="taskReportByClientResponse">
+    <wsdl:part name="parameters" element="tns:taskReportByClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="equipmentStateResponse">
+    <wsdl:part name="parameters" element="tns:equipmentStateResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TdmToZkWebservice">
+    <wsdl:operation name="addAtachFileInfo2Tdm">
+      <wsdl:input name="addAtachFileInfo2Tdm" message="tns:addAtachFileInfo2Tdm" />
+      <wsdl:output name="addAtachFileInfo2TdmResponse" message="tns:addAtachFileInfo2TdmResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="validateUserInfo">
+      <wsdl:input name="validateUserInfo" message="tns:validateUserInfo" />
+      <wsdl:output name="validateUserInfoResponse" message="tns:validateUserInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="equipmentState">
+      <wsdl:input name="equipmentState" message="tns:equipmentState" />
+      <wsdl:output name="equipmentStateResponse" message="tns:equipmentStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="listTdmProjectInfo">
+      <wsdl:input name="listTdmProjectInfo" message="tns:listTdmProjectInfo" />
+      <wsdl:output name="listTdmProjectInfoResponse" message="tns:listTdmProjectInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="modifyActualDate">
+      <wsdl:input name="modifyActualDate" message="tns:modifyActualDate" />
+      <wsdl:output name="modifyActualDateResponse" message="tns:modifyActualDateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="modifyTdmDeliveryListState">
+      <wsdl:input name="modifyTdmDeliveryListState" message="tns:modifyTdmDeliveryListState" />
+      <wsdl:output name="modifyTdmDeliveryListStateResponse" message="tns:modifyTdmDeliveryListStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateTdmTaskState">
+      <wsdl:input name="updateTdmTaskState" message="tns:updateTdmTaskState" />
+      <wsdl:output name="updateTdmTaskStateResponse" message="tns:updateTdmTaskStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="taskReportByClient">
+      <wsdl:input name="taskReportByClient" message="tns:taskReportByClient" />
+      <wsdl:output name="taskReportByClientResponse" message="tns:taskReportByClientResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="verificationReportState">
+      <wsdl:input name="verificationReportState" message="tns:verificationReportState" />
+      <wsdl:output name="verificationReportStateResponse" message="tns:verificationReportStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="listTdmTasks">
+      <wsdl:input name="listTdmTasks" message="tns:listTdmTasks" />
+      <wsdl:output name="listTdmTasksResponse" message="tns:listTdmTasksResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TdmToZkWebserviceServiceSoapBinding" type="tns:TdmToZkWebservice">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="addAtachFileInfo2Tdm">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addAtachFileInfo2Tdm">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addAtachFileInfo2TdmResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validateUserInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="validateUserInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="validateUserInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="equipmentState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="equipmentState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="equipmentStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listTdmProjectInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listTdmProjectInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listTdmProjectInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="modifyActualDate">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="modifyActualDate">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="modifyActualDateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="modifyTdmDeliveryListState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="modifyTdmDeliveryListState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="modifyTdmDeliveryListStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTdmTaskState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTdmTaskState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTdmTaskStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="taskReportByClient">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="taskReportByClient">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="taskReportByClientResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listTdmTasks">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listTdmTasks">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listTdmTasksResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="verificationReportState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="verificationReportState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="verificationReportStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TdmToZkWebserviceService">
+    <wsdl:port name="TdmToZkWebservicePort" binding="tns:TdmToZkWebserviceServiceSoapBinding">
+      <soap:address location="http://132.232.54.19:8085/tdm/services/tdmToZkWebservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

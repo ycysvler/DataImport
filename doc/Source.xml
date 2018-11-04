@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Sequence>
+  <Protocol LocalIP="">
+    <Item Name="MODEL" Address ="21"  ComType = "Udp" LocalSendPort="14010" LocalRecivePort="14012" RemoteIP="127.0.0.1" RemoteSendPort="15012" RemoteRecivePort="15010"  remoteSendDateChk = "false" ProtocolFile="./XXX.mdb"/>
+    <Item Name="EEC" Address ="22"  ComType = "Udp" LocalSendPort="14010" LocalRecivePort="14012" RemoteIP="127.0.0.1" RemoteSendPort="15012" RemoteRecivePort="15010"   remoteSendDateChk = "false" ProtocolFile="./XXX.mdb"/> 
+  </Protocol>
+  <ResourceInfo>
+    <Item Name="载荷杆" ObjID="scDev10" ResID="A1" Address ="21" MaxValue="100" MinValue="0" ObjCmd = "1" DigitType = "0"/>
+    <Item Name="温控电机" ObjID="scDev8" ResID="A13"  Address ="21" MaxValue="180" MinValue="0" ObjCmd = "2" DigitType = "0"/>
+    <Item Name="A通道切换" ObjID="siSIG1308" ResID="B82"  Address ="22" MaxValue="1" MinValue="0" ObjCmd = "3" DigitType = "1"/>
+    <Item Name="B通道切换" ObjID="siSIG1309" ResID="B83"  Address ="22" MaxValue="1" MinValue="0" ObjCmd = "4" DigitType = "1"/>
+    <Item Name="停车档" ObjID="siSIG1297" ResID="B74"  Address ="22" MaxValue="1" MinValue="0" ObjCmd = "5" DigitType = "1"/>
+    <Item Name="慢车档" ObjID="siSIG1298" ResID="B75"  Address ="22" MaxValue="1" MinValue="0" ObjCmd = "6" DigitType = "1"/>
+    <Item Name="飞行档" ObjID="siSIG1299" ResID="B76" Address ="22" MaxValue="1" MinValue="0" ObjCmd = "7" DigitType = "1"/>
+    <Item Name="慢车档" ObjID="siSIG1298" ResID="B95"  Address ="22" MaxValue="1" MinValue="0" ObjCmd = "8" DigitType = "1"/>
+    <Item Name="飞行档" ObjID="siSIG1299" ResID="B98" Address ="22" MaxValue="1" MinValue="0" ObjCmd = "9" DigitType = "1"/>
+  </ResourceInfo>
+</Sequence>

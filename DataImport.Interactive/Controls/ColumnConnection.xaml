@@ -1,0 +1,27 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataImport.Interactive.Controls" x:Class="DataImport.Interactive.Controls.ColumnConnection" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="1000">
+    <Grid x:Name="grid">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Name="scroll">
+            <Canvas  x:Name="root" MouseDown="root_MouseDown" MouseUp="root_MouseUp" MouseMove="root_MouseMove" Background="#414141" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!--left-->
+        <local:ColumnSourceItem Canvas.Left="0" Canvas.Top="0" MouseDown="ColumnSourceItem_MouseDown" />
+        <local:ColumnSourceItem Canvas.Left="0" Canvas.Top="30"/>
+        <local:ColumnSourceItem Canvas.Left="0" Canvas.Top="60"/>
+         
+        <!--right-->
+        <local:ColumnTargetItem Canvas.Left="554" Canvas.Top="0"/>
+        <local:ColumnTargetItem Canvas.Left="554" Canvas.Top="30"/>
+        <local:ColumnTargetItem Canvas.Left="554" Canvas.Top="60" MouseUp="ColumnTargetItem_MouseUp"/>
+           
+
+        </Canvas>
+    </ScrollViewer>
+        <local:LineConfigDialog x:Name="lineConfig" Visibility="Hidden" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,21 @@
+项目工程结构 ------------------------------------------------------------------------
+
+Console ：一个exe控制台，通过命令行方式传递参数进来导数据用的。（后期他们不用了）
+ConsoleDemo : 提供给无锡那边的，一个通过进程调用方式调用Console的demo，让他们参照着写进程调用的。（后期他们不用了）
+DataImport.BLL : 业务逻辑层代码
+DataImport.DataAccess ：数据库访问层代码
+DataImport.Interactive : 界面代码
+DataImport.WebSite ：Web端代码
+UnitTestProject : 单元测试 
+
+项目引用 ----------------------------------------------------------------------------
+除了.netframework自带的类库，使用了两个第三方类库。在dll目录里面。
+
+log4net.dll : 日志库
+Oracle.DataAccess.dll : oracle提供的数据库访问驱动，只用使用这个驱动，才可以使用大数据操作。
+    * 类库是区分32位，64位的。而且区分oracle版本，不向下兼容。
+    * 要到oracle安装目录里面找对应版本dll : oracle\product\11.2.0\dbhome_1\ODP.NET\bin\2.x\Oracle.DataAccess.dll
+
+
+
+

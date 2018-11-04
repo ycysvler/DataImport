@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="DataImport.Interactive.Controls.InputDataItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="700" >
+    <Border BorderThickness="0 1 0 0" BorderBrush="#333">
+
+        <Grid Margin="0 4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Name="r_string" VerticalAlignment="Center" Margin="8 0 0 0" IsChecked="True">字符</RadioButton>
+                <RadioButton Name="r_10" VerticalAlignment="Center" Margin="8 0 0 0">10进制数字</RadioButton>
+                <RadioButton Name="r_16" VerticalAlignment="Center" Margin="8 0 0 0">16进制数字</RadioButton>
+            </StackPanel>
+
+            <TextBlock Name="title" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Name="v1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Name="v2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Name="v3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        </Grid>
+    </Border>
+</UserControl>

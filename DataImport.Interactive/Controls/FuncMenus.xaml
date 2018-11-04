@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="DataImport.Interactive.Controls.FuncMenus"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="40" d:DesignWidth="600">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Background="#01000000"  Opacity="0.5"  Orientation="Horizontal" Name="menu5"  Cursor="Hand">
+            <Image Width="12" IsHitTestVisible="False"  Source="/DataImport.Interactive;component/Resources/Buttons/Funcs/func_menu_0.png"></Image>
+            <TextBlock  Margin="10 0 0 0"  IsHitTestVisible="False" Text="批量导入" VerticalAlignment="Center"  Foreground="White"  FontWeight="Bold"></TextBlock>
+        </StackPanel>
+        <StackPanel Background="#01000000"   Orientation="Horizontal" Name="menu0" Margin="20 0 0 0"  Cursor="Hand">
+            <Image Width="12" IsHitTestVisible="False"  Source="/DataImport.Interactive;component/Resources/Buttons/Funcs/func_menu_0.png"></Image>
+            <TextBlock  Margin="10 0 0 0"  IsHitTestVisible="False" Text="试验任务" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"></TextBlock>
+        </StackPanel>
+        <StackPanel Visibility="Collapsed" Background="#01000000" Opacity="0.5"  Orientation="Horizontal" Margin="20 0 0 0" Name="menu3" Cursor="Hand">
+            <Image Width="12" IsHitTestVisible="False"  Source="/DataImport.Interactive;component/Resources/Buttons/Funcs/func_menu_4.png"></Image>
+            <TextBlock  Margin="10 0 0 0"  IsHitTestVisible="False" Text="试验进度" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"></TextBlock>
+        </StackPanel>
+        <StackPanel Background="#01000000" Opacity="0.5" Orientation="Horizontal" Name="menu1" Margin="20 0 0 0"  Cursor="Hand">
+            <Image Width="12" IsHitTestVisible="False"  Source="/DataImport.Interactive;component/Resources/Buttons/Funcs/func_menu_1.png"></Image>
+            <TextBlock  Margin="10 0 0 0"  IsHitTestVisible="False" Text="解析器维护" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"></TextBlock>
+        </StackPanel>
+        <StackPanel Visibility="Collapsed"  Background="#01000000"  Opacity="0.5" Orientation="Horizontal" Name="menu2" Margin="20 0 0 0" Cursor="Hand">
+            <Image Width="12"  IsHitTestVisible="False"  Source="/DataImport.Interactive;component/Resources/Buttons/Funcs/func_menu_2.png"></Image>
+            <TextBlock Margin="10 0 0 0"  IsHitTestVisible="False" Text="数据导入" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"></TextBlock> 
+        </StackPanel>
+        <StackPanel Visibility="Collapsed" Background="#01000000"   Orientation="Horizontal"  Opacity="0.5" Name="menu4" Margin="20 0 0 0" Cursor="Hand">
+            <Image Width="12" IsHitTestVisible="False"  Source="/DataImport.Interactive;component/Resources/Buttons/Funcs/func_menu_0.png"></Image>
+            <TextBlock  Margin="10 0 0 0"  IsHitTestVisible="False" Text="mdb解析器" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"></TextBlock>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

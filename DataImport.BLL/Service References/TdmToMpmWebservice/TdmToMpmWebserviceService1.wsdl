@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://tdmToMpmWebservice.webservice.cape.avicit/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TdmToMpmWebserviceService" targetNamespace="http://tdmToMpmWebservice.webservice.cape.avicit/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://tdmToMpmWebservice.webservice.cape.avicit/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getMsg" type="tns:getMsg" />
+      <xs:element name="getMsgResponse" type="tns:getMsgResponse" />
+      <xs:element name="listTdmTaskTimesInfo" type="tns:listTdmTaskTimesInfo" />
+      <xs:element name="listTdmTaskTimesInfoResponse" type="tns:listTdmTaskTimesInfoResponse" />
+      <xs:element name="receiveMpmTask" type="tns:receiveMpmTask" />
+      <xs:element name="receiveMpmTaskResponse" type="tns:receiveMpmTaskResponse" />
+      <xs:element name="updateTdmTaskTimesInfo" type="tns:updateTdmTaskTimesInfo" />
+      <xs:element name="updateTdmTaskTimesInfoResponse" type="tns:updateTdmTaskTimesInfoResponse" />
+      <xs:complexType name="updateTdmTaskTimesInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="taskTimeInfoXml" type="xs:string" />
+          <xs:element minOccurs="0" name="method" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateTdmTaskTimesInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMsg">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="msg" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMsgResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listTdmTaskTimesInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="loginName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listTdmTaskTimesInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="receiveMpmTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="taskInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="receiveMpmTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="listTdmTaskTimesInfoResponse">
+    <wsdl:part name="parameters" element="tns:listTdmTaskTimesInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="receiveMpmTaskResponse">
+    <wsdl:part name="parameters" element="tns:receiveMpmTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMsgResponse">
+    <wsdl:part name="parameters" element="tns:getMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMsg">
+    <wsdl:part name="parameters" element="tns:getMsg" />
+  </wsdl:message>
+  <wsdl:message name="updateTdmTaskTimesInfo">
+    <wsdl:part name="parameters" element="tns:updateTdmTaskTimesInfo" />
+  </wsdl:message>
+  <wsdl:message name="listTdmTaskTimesInfo">
+    <wsdl:part name="parameters" element="tns:listTdmTaskTimesInfo" />
+  </wsdl:message>
+  <wsdl:message name="updateTdmTaskTimesInfoResponse">
+    <wsdl:part name="parameters" element="tns:updateTdmTaskTimesInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="receiveMpmTask">
+    <wsdl:part name="parameters" element="tns:receiveMpmTask" />
+  </wsdl:message>
+  <wsdl:portType name="TdmToMpmWebservice">
+    <wsdl:operation name="updateTdmTaskTimesInfo">
+      <wsdl:input name="updateTdmTaskTimesInfo" message="tns:updateTdmTaskTimesInfo" />
+      <wsdl:output name="updateTdmTaskTimesInfoResponse" message="tns:updateTdmTaskTimesInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMsg">
+      <wsdl:input name="getMsg" message="tns:getMsg" />
+      <wsdl:output name="getMsgResponse" message="tns:getMsgResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="listTdmTaskTimesInfo">
+      <wsdl:input name="listTdmTaskTimesInfo" message="tns:listTdmTaskTimesInfo" />
+      <wsdl:output name="listTdmTaskTimesInfoResponse" message="tns:listTdmTaskTimesInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="receiveMpmTask">
+      <wsdl:input name="receiveMpmTask" message="tns:receiveMpmTask" />
+      <wsdl:output name="receiveMpmTaskResponse" message="tns:receiveMpmTaskResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TdmToMpmWebserviceServiceSoapBinding" type="tns:TdmToMpmWebservice">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="updateTdmTaskTimesInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTdmTaskTimesInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTdmTaskTimesInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMsg">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getMsg">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getMsgResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listTdmTaskTimesInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listTdmTaskTimesInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listTdmTaskTimesInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="receiveMpmTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="receiveMpmTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="receiveMpmTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TdmToMpmWebserviceService">
+    <wsdl:port name="TdmToMpmWebservicePort" binding="tns:TdmToMpmWebserviceServiceSoapBinding">
+      <soap:address location="http://132.232.54.19:8085/tdm/services/tdmToMpmWebservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
