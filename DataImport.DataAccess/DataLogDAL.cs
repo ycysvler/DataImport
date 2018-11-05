@@ -14,7 +14,13 @@ namespace DataImport.DataAccess
         {
             string sql = string.Format("INSERT INTO MDS_IMP_DATA_LOG(FID,TEST_PROJECT_ID,IMP_DATE_TIME,FULL_FLODERNAME,IMPROWSCOUNT,IMP_STATUS,ERROR_MSG,CREATED_BY,CREATION_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE,LAST_UPDATE_IP,VERSION,IMPFILENAME,OBJECT_TABLE,TYPENAME) ");
             sql += string.Format("VALUES('{0}','{1}',to_date('{2}','yyyy/mm/dd hh24:mi:ss'),'{3}','{4}','{5}','{6}','{7}',to_date('{8}','yyyy/mm/dd hh24:mi:ss'),'{9}',to_date('{10}','yyyy/mm/dd hh24:mi:ss'),'{11}',{12},'{13}','{14}','{15}')",
-                item.FID, item.TestProjectID, item.ImpDateTime, item.FullFloderName, item.ImpRowsCount, item.ImpStatus, item.ErrorMsg, item.CreatedBy, item.CreationDate, item.LastUpdatedBy, item.LastUpdateDate, item.LastUpdateIp, item.Version, item.ImpFileName, item.ObjectTable, item.TypeName);
+                item.FID, item.TestProjectID, 
+                item.ImpDateTime.ToString("yyyy/MM/dd HH:mm:ss"), 
+                item.FullFloderName, 
+                item.ImpRowsCount, item.ImpStatus, item.ErrorMsg, item.CreatedBy, 
+                item.CreationDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdatedBy, 
+                item.LastUpdateDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdateIp, 
+                item.Version, item.ImpFileName, item.ObjectTable, item.TypeName);
 
             return OracleHelper.Excuse(sql);
         }

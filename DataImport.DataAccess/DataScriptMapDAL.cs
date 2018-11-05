@@ -117,7 +117,8 @@ namespace DataImport.DataAccess
             sql += string.Format("VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}',to_date('{9}','yyyy/mm/dd hh24:mi:ss'),'{10}',to_date('{11}','yyyy/mm/dd hh24:mi:ss'),'{12}',{13})",
                 item.FID, item.MdsImpDataScriptRuleID, item.TableColName, item.FileColName, item.TransferType, item.InsertValueMethod,
                 item.TransferScript.Replace("'", "''").Replace("\r\n", "'||chr(13)||chr(10)||'"), 
-                item.Remark, item.CreatedBy, item.CreationDate, item.LastUpdatedBy, item.LastUpdateDate, item.LastUpdateIp, item.Version);
+                item.Remark, item.CreatedBy, item.CreationDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdatedBy, 
+                item.LastUpdateDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdateIp, item.Version);
 
             //SaveScriptFile(item);
 

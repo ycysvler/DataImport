@@ -46,7 +46,9 @@ namespace DataImport.DataAccess
         {
             string sql = string.Format("INSERT INTO MDS_IMP_DATA_SCRIPT_RULE(FID,MDS_IMP_DATA_SCRIPT_ID,LINE_SEPERATOR,COL_SEPERATOR,COLNAME_LINES,DATA_LINES,DES_TABLE,REMARK,CREATED_BY,CREATION_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE,LAST_UPDATE_IP,VERSION,DES_FILE) ");
             sql += string.Format("VALUES('{0}','{1}','{2}','{3}',{4},{5},'{6}','{7}','{8}',to_date('{9}','yyyy/mm/dd hh24:mi:ss'),'{10}',to_date('{11}','yyyy/mm/dd hh24:mi:ss'),'{12}',{13},'{14}')",
-                item.FID, item.MdsImpDataScriptID, item.LineSeperator, item.ColSperator, item.ColnameLines, item.DataLines, item.DesTable, item.Remark, item.CreatedBy, item.CreationDate, item.LastUpdatedBy, item.LastUpdateDate, item.LastUpdateIp, item.Version, item.DesFile);
+                item.FID, item.MdsImpDataScriptID, item.LineSeperator, item.ColSperator, item.ColnameLines, item.DataLines, 
+                item.DesTable, item.Remark, item.CreatedBy, 
+                item.CreationDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdatedBy, item.LastUpdateDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdateIp, item.Version, item.DesFile);
 
             return OracleHelper.Excuse(sql); 
         }
@@ -67,7 +69,7 @@ namespace DataImport.DataAccess
             sql += string.Format("DES_TABLE='{0}',", item.DesTable);
             sql += string.Format("DES_FILE='{0}',", item.DesFile); 
             sql += string.Format("REMARK='{0}',", item.Remark);
-            sql += string.Format("LAST_UPDATE_DATE=to_date('{0}','yyyy/mm/dd hh24:mi:ss') ", DateTime.Now);
+            sql += string.Format("LAST_UPDATE_DATE=to_date('{0}','yyyy/mm/dd hh24:mi:ss') ", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             sql += string.Format("WHERE FID='{0}' ", item.FID);
             return OracleHelper.Excuse(sql);
         }

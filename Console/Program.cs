@@ -10,7 +10,7 @@ using System.Data.OracleClient;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Threading; 
 
 namespace Consoles
 {
@@ -20,6 +20,11 @@ namespace Consoles
 
         static void Main(string[] args)
         {
+            WriteLog100W.Write(); 
+
+
+            return;
+
             StreamWriter sw = new StreamWriter("D:\\1.txt");
             for (int i = 1; i <= 50000; i++) {
                 string s = string.Format("{0},12.5,5.57,13.7,0.7932,S50，S37,391,389,5515,77.9,5515,77.9,5515,77.9,5515,77.9,5515,77.9", i.ToString("00000"));
@@ -28,7 +33,9 @@ namespace Consoles
             sw.Close();
 
             DateTime begin = DateTime.Now;
-            Console.WriteLine(begin.ToString());
+            System.Console.WriteLine(begin.ToString());
+
+            
            
 
             List<string> sqls = new List<string>();
@@ -56,12 +63,12 @@ namespace Consoles
             //}
 
             DateTime end = DateTime.Now;
-            Console.WriteLine(end.ToString());
+            System.Console.WriteLine(end.ToString());
 
             TimeSpan span = end - begin;
-            Console.WriteLine(span.TotalSeconds);
+            System.Console.WriteLine(span.TotalSeconds);
 
-            Console.ReadLine();
+            System.Console.ReadLine();
             return;
             // 读取输入参数
             //if (instance.initArgs(args))
@@ -81,13 +88,13 @@ namespace Consoles
 
             if (args.Length != 4)
             {
-                Console.WriteLine("缺少参数------------------------------------------");
-                Console.WriteLine("用法：console.exe projectid datascriptid filepath");
-                Console.WriteLine("参数：");
-                Console.WriteLine("    projectid\t\t项目编号");
-                Console.WriteLine("    datascriptid\t解析器编号");
-                Console.WriteLine("    filepath\t\t数据文件路径");
-                Console.WriteLine("    userid\t\t本次操作的用户ID，用于写日志");
+                System.Console.WriteLine("缺少参数------------------------------------------");
+                System.Console.WriteLine("用法：console.exe projectid datascriptid filepath");
+                System.Console.WriteLine("参数：");
+                System.Console.WriteLine("    projectid\t\t项目编号");
+                System.Console.WriteLine("    datascriptid\t解析器编号");
+                System.Console.WriteLine("    filepath\t\t数据文件路径");
+                System.Console.WriteLine("    userid\t\t本次操作的用户ID，用于写日志");
                 return false;
             }
 
@@ -95,7 +102,7 @@ namespace Consoles
             var project = ProjectDAL.getInfo(projectfid);
             if (project == null)
             {
-                Console.WriteLine("项目'{0}'不存在，请检查参数", projectfid);
+                System.Console.WriteLine("项目'{0}'不存在，请检查参数", projectfid);
                 result = false;
             }
 
@@ -103,14 +110,14 @@ namespace Consoles
             var datascript = DataScriptDAL.getInfo(scriptid);
             if (datascript.FID == null)
             {
-                Console.WriteLine("解析器'{0}'不存在，请检查参数", scriptid);
+                System.Console.WriteLine("解析器'{0}'不存在，请检查参数", scriptid);
                 result = false;
             }
 
             filepath = args[2];
             if (!File.Exists(filepath))
             {
-                Console.WriteLine("数据文件'{0}'不存在，请检查参数", filepath);
+                System.Console.WriteLine("数据文件'{0}'不存在，请检查参数", filepath);
                 result = false;
             }
             userid = args[3];
@@ -178,9 +185,9 @@ namespace Consoles
                        stringBuilder.Append("\t");
                    }
                    // 显示进度条
-                   Console.WriteLine("-------------------------------------------------------------");
-                   Console.WriteLine("第{0}条数据", i + 1);
-                   Console.WriteLine(stringBuilder); 
+                   System.Console.WriteLine("-------------------------------------------------------------");
+                   System.Console.WriteLine("第{0}条数据", i + 1);
+                   System.Console.WriteLine(stringBuilder); 
                    
 
                    int result = 0;
@@ -245,7 +252,7 @@ namespace Consoles
                        dLogItem.ImpStatus = -1;
                        dLogItem.ErrorMsg = e.Message;
 
-                       Console.WriteLine("异常：{0}", err);
+                       System.Console.WriteLine("异常：{0}", err);
                    }
 
                    DataLogItemsDAL.Insert(dLogItem);
@@ -261,7 +268,7 @@ namespace Consoles
                // 把列数据记录到数据库
                ColumInfoDAL.Insert(rule.DesTable, rule.FID, userid, strucs);
 
-               Console.WriteLine("数据导入完成，原始文件总记录：（{0}条），导入成功：（{1}条）", allcount, successCount);
+               System.Console.WriteLine("数据导入完成，原始文件总记录：（{0}条），导入成功：（{1}条）", allcount, successCount);
 
            }));
 
@@ -290,8 +297,8 @@ namespace Consoles
                 }
             }
             catch(System.Exception e) {
-                Console.WriteLine("解析数据文件异常，请检查数据文件是否符合格式要求---------------------");
-                Console.WriteLine(e.Message);
+                System.Console.WriteLine("解析数据文件异常，请检查数据文件是否符合格式要求---------------------");
+                System.Console.WriteLine(e.Message);
             }
             return dt;
         }

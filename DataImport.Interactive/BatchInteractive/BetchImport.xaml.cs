@@ -42,6 +42,11 @@ namespace DataImport.Interactive.BatchInteractive
              
             foreach (string file in System.IO.Directory.GetFiles(m_Dir))
             {
+                if (file[0] == '.') {
+                    // 这是一个隐藏文件
+                    continue;   
+                }
+
                 string ext = System.IO.Path.GetExtension(file);
                 if (ext == ".txt" || ext == ".xls" || ext == ".xlsx" || ext == ".mdb" || ext == ".dat")
                 {

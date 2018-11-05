@@ -22,7 +22,8 @@ namespace DataImport.Interactive.BatchInteractive
     /// </summary>
     public partial class BetchItem : UserControl
     {
-        
+        log4net.ILog log = log4net.LogManager.GetLogger("RollingLogFileAppender");
+
         public BetchItem()
         {
             InitializeComponent();
@@ -42,9 +43,9 @@ namespace DataImport.Interactive.BatchInteractive
             string projectCode = "";
             string taskCode = "";
             string scriptCode = "";
-            int times = 0;
-             
-            Console.WriteLine("???:{0}", this.fileName.Text);
+            int times = 0; 
+
+            log.Info(string.Format("BetchItem > fileName - {0} ********************", this.fileName.Text)); 
 
             string[] t1 = System.IO.Path.GetFileNameWithoutExtension(this.fileName.Text).Split('@');
             if (t1.Length > 1)
@@ -62,13 +63,37 @@ namespace DataImport.Interactive.BatchInteractive
                     MainWindow.UserID, MainWindow.UserName,
                     projectCode, taskCode, scriptCode, times, this.fileName.Text);
 
+                log.Info(string.Format("BetchItem > projectCode:{0}  tackCode:{1}  scriptCode:{2}  times:{3}  fileName:{4}",
+                    projectCode, taskCode, scriptCode, times, fileName.Text));
+
                 bl.CompleteEvent += Bl_CompleteEvent;
                 bl.MessageEvent += Bl_MessageEvent;
 
                 Thread thread = new Thread(new ThreadStart(() =>
                 {
                     if (bl.init()) {
-                        bl.run();
+                        try
+                        {
+                            bl.run();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Dispatcher.BeginInvoke((Delegate)new Action(() =>
+                            {
+                                Paragraph paragraph = new Paragraph();
+                                Run runflg = new Run("数据导入失败\r\n" + ex.ToString());
+                                runflg.Foreground = new SolidColorBrush(Colors.Red);
+                                paragraph.Inlines.Add(runflg);
+                                fd.Blocks.Add(paragraph);
+                            }));
+                            if (this.CompleteEvent != null)
+                            {
+                                CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败!" });
+                            }
+                        }
+                        finally {
+                             
+                        }
                     } 
                 }));
                 thread.Start();

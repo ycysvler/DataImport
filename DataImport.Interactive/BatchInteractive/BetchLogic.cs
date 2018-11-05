@@ -25,6 +25,8 @@ namespace DataImport.Interactive.BatchInteractive
 
     public class BetchLogic
     {
+        log4net.ILog log = log4net.LogManager.GetLogger("RollingLogFileAppender");
+
         TaskInfo taskInfo = null;
         DataScript dataScript = null;
         DataScriptRule dataScriptRule = null;
@@ -242,7 +244,19 @@ namespace DataImport.Interactive.BatchInteractive
             SendMessageEvent(string.Format("开始处理数据文件：{0}", sourceFile));
             DateTime begin = DateTime.Now, end=DateTime.Now;
             this.tableName = this.dataScriptRule.DesTable;
-            this.isUpdate = checkTestTimes(); 
+            this.isUpdate = checkTestTimes();
+
+            // 判断源表是否存在
+            /*
+            if (TableDAL.getTableStructure(this.dataScriptRule.DesTable).Count == 0) {
+                // 源表不存在
+                log.Error(string.Format("BetchLogic > run > 目标表 [ {0} ] 不存在", this.dataScriptRule.DesTable));
+                SendMessageEvent(false, string.Format("目标表 [ {0} ] 不存在", this.dataScriptRule.DesTable));
+                SendCompleteEvent("导入失败");
+                return;
+            }
+            */
+
             // 写入导入数据日志
             DataLog dataLog = createLog(0, System.IO.Path.GetFileName(sourceFile));
             // 上传文件
@@ -254,7 +268,26 @@ namespace DataImport.Interactive.BatchInteractive
 
             begin = DateTime.Now;
 
-            string fileType = System.IO.Path.GetExtension(this.sourceFile); 
+            string fileType = System.IO.Path.GetExtension(this.sourceFile);
+
+            // 判断本次实验，有没有解析器执行过, 创建临时表
+            if (isUpdate)
+            { 
+                Structure st = structList.FirstOrDefault(it => it.Comments == System.Configuration.ConfigurationManager.AppSettings["pk"]);
+                if (st != null)
+                {  
+                    tableName += "_" + DateTime.Now.Millisecond.ToString();
+                    if (tableName.Length > 30)
+                    {
+                        tableName = tableName.Remove(0, tableName.Length - 29);
+                    }
+
+                    log.Info(string.Format("BetchLogic > run > 本次为更新操作,创建临时表:{0}", tableName ));
+
+                    TableDAL.createtempTable(dataScriptRule.DesTable, tableName);
+                    //TableDAL.AddIndex(tableName, string.Format("{0},TASKTIMES,PROJECTID", st.ColumnName));
+                }
+            }
 
             switch (fileType)
             {
@@ -313,16 +346,14 @@ namespace DataImport.Interactive.BatchInteractive
             //TableDAL.DropTable(tableName);
         }
 
-        private void xls2db()
+        private bool xls2db()
         {
             DataTable dt = ExcelImportHelper.GetDataTable(this.sourceFile);
-            this.calColumnMap(dt); 
-            if (!insertDataTable(dt, structList, this.tableName))
-            {
-                return;
-            }
+            this.calColumnMap(dt);
+            return insertDataTable(dt, structList, this.tableName);
+             
         }
-        private void txt2db()
+        private bool txt2db()
         {
             DataTable dt = TextImportHelper.GetDataTable(this.sourceFile, this.dataScriptRule.getColSeperatorChar());
             this.calColumnMap(dt);
@@ -331,6 +362,13 @@ namespace DataImport.Interactive.BatchInteractive
             DataTable dataTable = new DataTable();
             // 获取列头，创建表结构
             string[] columnNames = TextImportHelper.GetColumns(sourceFile, separator);
+
+            if (columnNames.Length <= 1) {
+                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", separator));
+                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", separator));
+                SendCompleteEvent("导入失败");
+                return false;
+            }
 
             // 如果是temp表，去掉无用列
             if (tableName != this.dataScriptRule.DesTable)
@@ -376,6 +414,8 @@ namespace DataImport.Interactive.BatchInteractive
                 }
             }
             sr.Close();
+
+            return true;
         }
 
         private void acc2db()
