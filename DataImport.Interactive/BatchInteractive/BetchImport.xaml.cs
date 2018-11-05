@@ -42,7 +42,7 @@ namespace DataImport.Interactive.BatchInteractive
              
             foreach (string file in System.IO.Directory.GetFiles(m_Dir))
             {
-                if (file[0] == '.') {
+                if (System.IO.Path.GetFileName(file)[0] == '.') {
                     // 这是一个隐藏文件
                     continue;   
                 }

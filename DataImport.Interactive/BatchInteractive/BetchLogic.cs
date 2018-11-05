@@ -246,16 +246,14 @@ namespace DataImport.Interactive.BatchInteractive
             this.tableName = this.dataScriptRule.DesTable;
             this.isUpdate = checkTestTimes();
 
-            // 判断源表是否存在
-            /*
+            // 判断源表是否存在 
             if (TableDAL.getTableStructure(this.dataScriptRule.DesTable).Count == 0) {
                 // 源表不存在
                 log.Error(string.Format("BetchLogic > run > 目标表 [ {0} ] 不存在", this.dataScriptRule.DesTable));
                 SendMessageEvent(false, string.Format("目标表 [ {0} ] 不存在", this.dataScriptRule.DesTable));
                 SendCompleteEvent("导入失败");
                 return;
-            }
-            */
+            } 
 
             // 写入导入数据日志
             DataLog dataLog = createLog(0, System.IO.Path.GetFileName(sourceFile));
@@ -280,12 +278,12 @@ namespace DataImport.Interactive.BatchInteractive
                     if (tableName.Length > 30)
                     {
                         tableName = tableName.Remove(0, tableName.Length - 29);
-                    }
-
-                    log.Info(string.Format("BetchLogic > run > 本次为更新操作,创建临时表:{0}", tableName ));
-
+                    }  
                     TableDAL.createtempTable(dataScriptRule.DesTable, tableName);
-                    //TableDAL.AddIndex(tableName, string.Format("{0},TASKTIMES,PROJECTID", st.ColumnName));
+
+                    log.Info(string.Format("BetchLogic > run > 本次为更新操作,创建临时表:{0}", tableName));
+
+                    TableDAL.AddIndex(tableName, string.Format("{0},TASKTIMES,PROJECTID", st.ColumnName));
                 }
             }
 
@@ -314,7 +312,9 @@ namespace DataImport.Interactive.BatchInteractive
 
             end = DateTime.Now;
             SendMessageEvent(string.Format("数据导入，耗时：{0}秒", (end - begin).TotalSeconds));
-            SendCompleteEvent("数据导入成功！");
+
+            if(!isUpdate)
+                SendCompleteEvent("数据导入成功！");
              
         }
 
@@ -327,7 +327,7 @@ namespace DataImport.Interactive.BatchInteractive
             System.Data.OracleClient.OracleParameter p1 = new System.Data.OracleClient.OracleParameter("I_EnTest_Work_Id", this.taskInfo.id);
             System.Data.OracleClient.OracleParameter p2 = new System.Data.OracleClient.OracleParameter("I_EnTest_Times", System.Data.OracleClient.OracleType.Int32);
             p2.Value = this.times;
-            System.Data.OracleClient.OracleParameter p3 = new System.Data.OracleClient.OracleParameter("I_Fk_Time_Name", this.dataScriptRule.DesBusinessPk);
+            System.Data.OracleClient.OracleParameter p3 = new System.Data.OracleClient.OracleParameter("I_Fk_Time_Name", "COLUMN0");
             System.Data.OracleClient.OracleParameter p4 = new System.Data.OracleClient.OracleParameter("I_Object_Table_Name", this.dataScriptRule.DesTable);
             System.Data.OracleClient.OracleParameter p5 = new System.Data.OracleClient.OracleParameter("I_Source_Table_Name", tableName);
             System.Data.OracleClient.OracleParameter p6 = new System.Data.OracleClient.OracleParameter("O_Return_Int", System.Data.OracleClient.OracleType.Int32);
@@ -341,8 +341,16 @@ namespace DataImport.Interactive.BatchInteractive
             ps[4] = p5;
             ps[5] = p6;
             ps[6] = p7;
+
+            log.Info(string.Format("BetchLogic > updateDbByID > 更新数据:{0} -> {1}", tableName, this.dataScriptRule.DesTable));
+            SendMessageEvent(string.Format("更新数据:{0} -> {1} , {2}", tableName, this.dataScriptRule.DesTable, DateTime.Now.ToString("HH:mm:ss")));
+
             object[] prout = OracleHelper.ExcuteProc("Process_Date_Server.Process_Temp_Into_Oragin", 2, ps);
 
+            log.Info(string.Format("BetchLogic > updateDbByID > 更新结束:{0} : {1} {2} {3}", this.dataScriptRule.DesTable, DateTime.Now.ToString("HH:mm:ss"), prout[0], prout[1]));
+            SendMessageEvent(string.Format("更新结束:{0} : {1}", this.dataScriptRule.DesTable, DateTime.Now.ToString("HH:mm:ss")));
+
+            SendCompleteEvent(prout[1].ToString());
             //TableDAL.DropTable(tableName);
         }
 
@@ -369,11 +377,12 @@ namespace DataImport.Interactive.BatchInteractive
                 SendCompleteEvent("导入失败");
                 return false;
             }
-
+             
             // 如果是temp表，去掉无用列
             if (tableName != this.dataScriptRule.DesTable)
             {
                 dropColumn(tableName, columnNames, structList);
+                log.Info(string.Format("BetchLogic > run > 判断临时表，去掉扩展列"));
             }
 
             for (int i = 0; i < columnNames.Length; i++)
@@ -383,9 +392,13 @@ namespace DataImport.Interactive.BatchInteractive
             }
             DateTime begin = DateTime.Now;
             Console.WriteLine(begin);
+
+            log.Info(string.Format("BetchLogic > run > 开始导入:{0}", begin));
+
             StreamReader sr = new StreamReader(sourceFile, Encoding.Default);
             sr.ReadLine();
 
+            int count = 0;
             while (true)
             {
                 // 读一行数据
@@ -407,13 +420,19 @@ namespace DataImport.Interactive.BatchInteractive
                 }
                 dataTable.Rows.Add(dr);
 
-                if (dataTable.Rows.Count >= 1000)
+                if (dataTable.Rows.Count >= 10000)
                 {
                     insertDataTable(dataTable, structList, tableName);
                     dataTable.Rows.Clear();
+                    log.Info(string.Format("BetchLogic > run > 凑够10000行写一次库 :{0}", count));
+                    SendMessageEvent(string.Format("写入数据：{0} , 表 [ {1} ]", count, tableName));
                 }
+                count++;
             }
             sr.Close();
+
+            log.Info(string.Format("BetchLogic > run > 全部写入完成:{0}", count));
+            SendMessageEvent(string.Format("写完数据：{0} , 表 [ {1} ]", count, tableName));
 
             return true;
         }
@@ -510,23 +529,7 @@ namespace DataImport.Interactive.BatchInteractive
         {
             // 判断本次实验，有没有解析器执行过
             if (DataLogDAL.getList(this.taskInfo.id).Count(it => Convert.ToInt32(it.Version) == this.times) > 0)
-            {
-
-                Structure st = structList.FirstOrDefault(it => it.Comments == System.Configuration.ConfigurationManager.AppSettings["pk"]);
-                if (st != null)
-                {
-                    this.dataScriptRule.DesBusinessPk = st.ColumnName;
-
-
-                    tableName += "_" + DateTime.Now.Millisecond.ToString();
-                    if (tableName.Length > 30)
-                    {
-                        tableName = tableName.Remove(0, tableName.Length - 29);
-                    }
-
-                    TableDAL.createtempTable(this.dataScriptRule.DesTable, tableName);
-                    TableDAL.AddIndex(tableName, string.Format("{0},TASKTIMES,PROJECTID", st.ColumnName));
-                }
+            { 
                 return true;
             }
             return false;
