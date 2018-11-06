@@ -140,7 +140,7 @@
                 <ComboBox  x:Name="cbGongbu" Margin="10 0" ItemsSource="{Binding}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button VerticalAlignment="Center"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Content="执行脚本" x:Name="scriptrun" Click="scriptrun_Click" Height="36" Margin="0,22" Width="80"   />
+                <Button VerticalAlignment="Center" Visibility="Hidden"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Content="执行脚本" x:Name="scriptrun" Click="scriptrun_Click" Height="36" Margin="0,22" Width="80"   />
                 <Button VerticalAlignment="Center"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Content="查询" x:Name="query" Click="query_Click" Height="36" Margin="0,22" Width="50"  />
                 <Button VerticalAlignment="Center"  HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Content="清除" x:Name="clear" Click="clear_Click" Height="36" Margin="0,22" Width="50" />
 

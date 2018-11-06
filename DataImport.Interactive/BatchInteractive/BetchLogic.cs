@@ -606,8 +606,7 @@ namespace DataImport.Interactive.BatchInteractive
         }
 
         private bool insertDataTable(DataTable dataTable, List<Structure> structList, string tableName)
-        {
-
+        { 
             allcount += dataTable.Rows.Count;
 
             List<string> columnNameList = new List<string>();
@@ -719,7 +718,8 @@ namespace DataImport.Interactive.BatchInteractive
             }
             catch (System.Exception ex)
             {
-
+                log.Error(string.Format("BetchLogic > run > insertDataTable > {0}", ex));
+                SendMessageEvent(false, "遇到异常：" + ex.ToString());
             }
             baseline += dataTable.Rows.Count;
             int btcount = baseline;
