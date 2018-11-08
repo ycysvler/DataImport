@@ -34,6 +34,8 @@ namespace DataImport.Interactive.TaskInfoInteractive
         static DateTime? s_qEnd;
         static int? selectIndex;
 
+        log4net.ILog log = log4net.LogManager.GetLogger("RollingLogFileAppender");
+
         public TaskInfoList()
         {
             InitializeComponent();
@@ -206,13 +208,18 @@ namespace DataImport.Interactive.TaskInfoInteractive
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                dataSource = TaskinfoDAL.getList(MainWindow.UserName);// WebHelper.listTdmTasks(MainWindow.UserName);
-                //dataSource = WebHelper.listTdmTasks(MainWindow.UserName);
-                //dataGrid.DataContext = dataSource; 
+                log.Info(string.Format("TaskInfoList > getList > user name:{0}", MainWindow.UserName));
 
-                cbGongbu.ItemsSource = getGongBu(dataSource);
+                dataSource = TaskinfoDAL.getList(MainWindow.UserName);
+
+                log.Info(string.Format("TaskInfoList > getList > data count:{0}", dataSource.Count));
+
+                List<KV> gongbus = getGongBu(dataSource);
+                cbGongbu.ItemsSource = gongbus;
                 cbGongbu.DisplayMemberPath = "value";
-               
+
+                log.Info(string.Format("TaskInfoList > gongbu List > data count:{0}", gongbus.Count));
+
                 cbGongbu.SelectedIndex = s_cbGongbu.HasValue? s_cbGongbu.Value : 0; 
                  
                 dpBegin.SelectedDate = s_qBegin.HasValue ? s_qBegin : DateTime.Now.AddDays(-1);
@@ -221,14 +228,7 @@ namespace DataImport.Interactive.TaskInfoInteractive
                 if (!string.IsNullOrEmpty(s_qProjectName)) { qProjectName.Text = s_qProjectName; }
                 if (!string.IsNullOrEmpty(s_qTaskName)) { qTaskName.Text = s_qTaskName; }
 
-                query_Click(null, null);
-
-                // 用于记录上次选中了谁
-
-                //if (selectIndex.HasValue) {
-                //    dataGrid.SelectedIndex = selectIndex.Value;
-                //}
-
+                query_Click(null, null); 
                 showDetail();
             }
         }
@@ -275,8 +275,12 @@ namespace DataImport.Interactive.TaskInfoInteractive
             List<KV> result = new List<KV>();
             result.Add(new KV() { key = "", value = "全部" });
 
+            foreach(var item in source) {
+                log.Debug(string.Format("TaskInfoList > getGongBu > taskType:{0}", item.taskType));
+            }
+
             foreach (var item in source.Where(it => it.taskType == "工序"))
-            { // || it.taskType == "工步"
+            { 
                 result.Add(new KV() { key = item.taskCode, value = "[" + item.taskCode +"]"+ item.taskName });
             }
 
@@ -602,9 +606,11 @@ namespace DataImport.Interactive.TaskInfoInteractive
                     }
                 }
             }
+             
+            var list = queryList.OrderBy(it => it.planCodeGantt).ToList();
+            taskGrid.TaskInfoList = list;
 
-            //dataGrid.DataContext = queryList;
-            taskGrid.TaskInfoList = queryList.OrderBy(it=>it.planCodeGantt).ToList();
+            log.Info(string.Format("TaskInfoList > taskGrid > data count:{0}", list.Count));
         }
         private void clear_Click(object sender, RoutedEventArgs e)
         {
@@ -615,8 +621,7 @@ namespace DataImport.Interactive.TaskInfoInteractive
             qBegin.SelectedDate = null;
             qEnd.SelectedDate = null;
             cbStatus.SelectedIndex = 0;
-              
-            //dataGrid.DataContext = queryList;
+               
             query_Click(null, null);
         }
 
