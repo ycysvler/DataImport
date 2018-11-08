@@ -57,22 +57,10 @@ namespace DataImport.Interactive
         {
             InitializeComponent();
 
+            // 这里牛逼了，遇到一个XP下中文乱码问题
+            // 通过写死环境变量的方式，让客户端与服务器端用指定字符集通讯
             Environment.SetEnvironmentVariable("NLS_LANG", "SIMPLIFIED CHINESE_CHINA.ZHS16GBK", EnvironmentVariableTarget.Process);
-
-            //Class1 c1 = new Class1("4028b48152632a160152635092f7000e", "shaozj", "8888", "1.23.1.1", "", 7, @"C:\data\t001.txt");
-            //BetchLogic c1 = new BetchLogic("4028b48152632a160152635092f7000e", "shaozj", "8888", "1.23.1.1", "trainGroup2016000", 8, @"C:\data\t002.xlsx");
-            //c1.run();
-
-            //AccessImportHelper h = new AccessImportHelper(@"C:\data\t003@8888,1.23.1.1,trainGroup2016000,7.mdb");
-            //var names =  h.getTableNames();
-            //foreach (var name in names) {
-            //    h.getDataTable(name);
-            //}
-
-            //BetchLogic.BetchDir("4028b48152632a160152635092f7000e", "shaozj", @"C:\data");
-
-
-
+   
             Process[] pro = Process.GetProcesses();
             int n = pro.Where(p => p.ProcessName.Equals("DataImport.Interactive")).Count();
             if (n > 1)
