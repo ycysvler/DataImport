@@ -59,8 +59,12 @@ namespace DataImport.Interactive
 
             // 这里牛逼了，遇到一个XP下中文乱码问题
             // 通过写死环境变量的方式，让客户端与服务器端用指定字符集通讯
-            Environment.SetEnvironmentVariable("NLS_LANG", "SIMPLIFIED CHINESE_CHINA.ZHS16GBK", EnvironmentVariableTarget.Process);
-   
+            string NLS_LANG = System.Configuration.ConfigurationManager.AppSettings["NLS_LANG"];
+
+            if (!string.IsNullOrEmpty(NLS_LANG)) {
+                Environment.SetEnvironmentVariable("NLS_LANG", NLS_LANG, EnvironmentVariableTarget.Process);
+            }
+              
             Process[] pro = Process.GetProcesses();
             int n = pro.Where(p => p.ProcessName.Equals("DataImport.Interactive")).Count();
             if (n > 1)
