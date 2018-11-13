@@ -377,8 +377,8 @@ namespace DataImport.Interactive.DataScriptInteractive2
                     oinfo.Status = "02";
                     oinfo.Version = 1;
                     oinfo.LastUpdateIp = "127.0.0.1";
-                    oinfo.LastUpdateDate = DateTime.Now.ToString();
-                    oinfo.CreationDate = DateTime.Now.ToString();
+                    oinfo.LastUpdateDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                    oinfo.CreationDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                     ObjtableInfoDAL.Insert(oinfo);
                 }
             }

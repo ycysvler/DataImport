@@ -115,6 +115,14 @@ namespace DataImport.Interactive.BatchInteractive
                 return false;
             }
 
+            var dataSource = WebHelper.listTdmTaskTimesInfo(taskInfo.id);
+
+            if (dataSource.Count(it => it.TestTime == this.times.ToString()) < 1) {
+                SendMessageEvent(false, string.Format("任务 [ {0} ] ,实验次数 [ {1} ] 不存在，", taskCode, this.times));
+                CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败" });
+                return false;
+            }
+
             string fid = scriptCode2Fid(scriptCode);
 
             if (string.IsNullOrEmpty(fid))
@@ -363,17 +371,26 @@ namespace DataImport.Interactive.BatchInteractive
         }
         private bool txt2db()
         {
+            char separator = this.dataScriptRule.getColSeperatorChar();
+
             DataTable dt = TextImportHelper.GetDataTable(this.sourceFile, this.dataScriptRule.getColSeperatorChar());
+            if (dt.Columns.Count <= 1) {
+                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
+                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
+                SendCompleteEvent("导入失败");
+                return false;
+            }
+
             this.calColumnMap(dt);
 
-            char separator = this.dataScriptRule.getColSeperatorChar();
+            
             DataTable dataTable = new DataTable();
             // 获取列头，创建表结构
             string[] columnNames = TextImportHelper.GetColumns(sourceFile, separator);
 
             if (columnNames.Length <= 1) {
-                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", separator));
-                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", separator));
+                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
+                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
                 SendCompleteEvent("导入失败");
                 return false;
             }
