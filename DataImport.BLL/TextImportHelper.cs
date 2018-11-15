@@ -101,10 +101,13 @@ namespace DataImport.BLL
                 // 根据分隔符取数据
                 //string[] columnDatas = row.Split(separator);
                 string[] columnDatas = SplitFuckString(row,separator).ToArray();
-                
+
+                if (columnDatas.Length < dt.Columns.Count) {
+                    continue;
+                }
                 // 创建一个新行
                 DataRow dr = dt.NewRow();
-                for (int i = 0; i < columnDatas.Length; i++) {
+                for (int i = 0; i < dt.Columns.Count; i++) {
                     dr[i] = columnDatas[i];
                 }
                 dt.Rows.Add(dr);

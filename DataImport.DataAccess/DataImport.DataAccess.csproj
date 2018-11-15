@@ -67,12 +67,14 @@
     <Compile Include="Entitys\DataScriptMap.cs" />
     <Compile Include="Entitys\DataScriptRule.cs" />
     <Compile Include="Entitys\DropDownListItem.cs" />
+    <Compile Include="Entitys\ImportLog.cs" />
     <Compile Include="Entitys\ObjtableInfo.cs" />
     <Compile Include="Entitys\Project.cs" />
     <Compile Include="Entitys\Sequence.cs" />
     <Compile Include="Entitys\Structure.cs" />
     <Compile Include="Entitys\TaskInfo.cs" />
     <Compile Include="Entitys\TasktimeInfo.cs" />
+    <Compile Include="ImportLogDAL.cs" />
     <Compile Include="ObjtableInfoDAL.cs" />
     <Compile Include="OracleAccess.cs" />
     <Compile Include="OracleHelper.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataImport.DataAccess;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,11 @@ namespace DataImport.Interactive.BatchInteractive
     {
         log4net.ILog log = log4net.LogManager.GetLogger("RollingLogFileAppender");
 
+        string projectCode = "";
+        string taskCode = "";
+        string scriptCode = "";
+        int times = 0;
+
         public BetchItem()
         {
             InitializeComponent();
@@ -40,10 +46,7 @@ namespace DataImport.Interactive.BatchInteractive
         }
          
         public void run() {
-            string projectCode = "";
-            string taskCode = "";
-            string scriptCode = "";
-            int times = 0; 
+            
 
             log.Info(string.Format("BetchItem > fileName - {0} ********************", this.fileName.Text)); 
 
@@ -135,6 +138,16 @@ namespace DataImport.Interactive.BatchInteractive
                 runflg.Foreground = new SolidColorBrush(Colors.Green);
                 paragraph.Inlines.Add(runflg);
                 fd.Blocks.Add(paragraph);
+
+                var tr = new TextRange(fd.ContentStart, fd.ContentEnd);
+
+                ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog() {
+                    FileName = this.fileName.Text,
+                    CreatedBy = MainWindow.UserName,
+                    Content = tr.Text.Replace("  ", "\r\n"),
+                    ProjectCode = projectCode,
+                    Times = times.ToString()
+                });
 
                 if (fd.Blocks.Count > 100)
                 {

@@ -299,30 +299,38 @@ namespace DataImport.Interactive.BatchInteractive
             {
                 case ".xls":
                 case ".xlsx":
-                    xls2db();
-                    if (isUpdate)
+                    if (xls2db())
                     {
-                        updateDbByID();
+                        if (isUpdate)
+                        {
+                            updateDbByID();
+                        }
                     }
                     break;
                 case ".txt":
                 case ".dat":
-                    txt2db();
-                    if (isUpdate)
-                    {
-                        updateDbByID();
-                    }
+                    if (txt2db()) {
+                        if (isUpdate)
+                        {
+                            updateDbByID();
+                        }
+                    } 
                     break;
                 case ".mdb":
-                    acc2db();
+                    if (acc2db()) {
+                        if (isUpdate)
+                        {
+                            updateDbByID();
+                        }
+                    }
                     break;
             }
 
             end = DateTime.Now;
             SendMessageEvent(string.Format("数据导入，耗时：{0}秒", (end - begin).TotalSeconds));
 
-            if(!isUpdate)
-                SendCompleteEvent("数据导入成功！");
+            //if(!isUpdate)
+            //    SendCompleteEvent("数据导入成功！");
              
         }
 
@@ -366,17 +374,27 @@ namespace DataImport.Interactive.BatchInteractive
         {
             DataTable dt = ExcelImportHelper.GetDataTable(this.sourceFile);
             this.calColumnMap(dt);
-            return insertDataTable(dt, structList, this.tableName);
-             
+            bool result = insertDataTable(dt, structList, this.tableName);
+            return result;
         }
         private bool txt2db()
         {
             char separator = this.dataScriptRule.getColSeperatorChar();
+            // 获取列头，创建表结构
+            string[] columnNames = TextImportHelper.GetColumns(sourceFile, separator);
+            // 根据分隔符计算列是否有问题
+            if (columnNames.Length <= 1)
+            {
+                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
+                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.getColSeperatorChar()));
+                SendCompleteEvent("导入失败");
+                return false;
+            }
 
             DataTable dt = TextImportHelper.GetDataTable(this.sourceFile, this.dataScriptRule.getColSeperatorChar());
             if (dt.Columns.Count <= 1) {
                 log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
-                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
+                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.getColSeperatorChar()));
                 SendCompleteEvent("导入失败");
                 return false;
             }
@@ -385,15 +403,7 @@ namespace DataImport.Interactive.BatchInteractive
 
             
             DataTable dataTable = new DataTable();
-            // 获取列头，创建表结构
-            string[] columnNames = TextImportHelper.GetColumns(sourceFile, separator);
-
-            if (columnNames.Length <= 1) {
-                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
-                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
-                SendCompleteEvent("导入失败");
-                return false;
-            }
+           
              
             // 如果是temp表，去掉无用列
             if (tableName != this.dataScriptRule.DesTable)
@@ -413,7 +423,7 @@ namespace DataImport.Interactive.BatchInteractive
             log.Info(string.Format("BetchLogic > run > 开始导入:{0}", begin));
 
             StreamReader sr = new StreamReader(sourceFile, Encoding.Default);
-            sr.ReadLine();
+            string header = sr.ReadLine();
 
             int count = 0;
             while (true)
@@ -429,6 +439,14 @@ namespace DataImport.Interactive.BatchInteractive
                 row = row.Trim();
                 // 根据分隔符取数据
                 string[] columnDatas = row.Split(separator);
+
+                if (columnNames.Length != columnDatas.Length) {
+                    SendMessageEvent(false, string.Format("[{0}]\r\n[{1}]\r\n列头共 [ {2} ] 列，与行数据 [ {3} ] 列不匹配,请检查数据数量及分隔符；",
+                        header, row, columnNames.Length, columnDatas.Length ));
+                    SendCompleteEvent("导入失败");
+                    return false;
+                }
+
                 // 创建一个新行
                 DataRow dr = dataTable.NewRow();
                 for (int i = 0; i < columnDatas.Length; i++)
@@ -450,24 +468,19 @@ namespace DataImport.Interactive.BatchInteractive
 
             log.Info(string.Format("BetchLogic > run > 全部写入完成:{0}", count));
             SendMessageEvent(string.Format("写完数据：{0} , 表 [ {1} ]", count, tableName));
-
+            
             return true;
         }
 
-        private void acc2db()
+        private bool acc2db()
         {
             AccessImportHelper accHelper = new AccessImportHelper(this.sourceFile);
 
             DataTable dt = accHelper.getAllDataTable();
             this.calColumnMap(dt);
 
-            insertDataTable(dt, structList, this.tableName);
-
-            if (isUpdate)
-            {
-                // 这次是更新逻辑
-                updateDbByID();
-            }             
+            bool result = insertDataTable(dt, structList, this.tableName);
+            return result; 
         }
 
         private Dictionary<string, string> getColumnMap()
