@@ -295,43 +295,35 @@ namespace DataImport.Interactive.BatchInteractive
                 }
             }
 
+            bool inputOk = false;
+
             switch (fileType)
             {
                 case ".xls":
                 case ".xlsx":
-                    if (xls2db())
-                    {
-                        if (isUpdate)
-                        {
-                            updateDbByID();
-                        }
-                    }
+                    inputOk = xls2db(); 
                     break;
                 case ".txt":
                 case ".dat":
-                    if (txt2db()) {
-                        if (isUpdate)
-                        {
-                            updateDbByID();
-                        }
-                    } 
+                    inputOk = txt2db();
                     break;
                 case ".mdb":
-                    if (acc2db()) {
-                        if (isUpdate)
-                        {
-                            updateDbByID();
-                        }
-                    }
-                    break;
+                    inputOk = acc2db();
+                    break; 
             }
-
+            if (inputOk)
+            {
+                if (isUpdate)
+                {
+                    updateDbByID();
+                }
+            }
+            else {
+                if (isUpdate)
+                    TableDAL.DropTable(tableName);
+            }
             end = DateTime.Now;
-            SendMessageEvent(string.Format("数据导入，耗时：{0}秒", (end - begin).TotalSeconds));
-
-            //if(!isUpdate)
-            //    SendCompleteEvent("数据导入成功！");
-             
+            SendMessageEvent(string.Format("数据导入，耗时：{0}秒", (end - begin).TotalSeconds)); 
         }
 
         

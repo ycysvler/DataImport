@@ -140,12 +140,14 @@ namespace DataImport.Interactive.BatchInteractive
                 fd.Blocks.Add(paragraph);
 
                 var tr = new TextRange(fd.ContentStart, fd.ContentEnd);
+                string log = tr.Text;
 
                 ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog() {
                     FileName = this.fileName.Text,
                     CreatedBy = MainWindow.UserName,
-                    Content = tr.Text.Replace("  ", "\r\n"),
+                    Content = tr.Text.Replace("\r\n", "<br />"),
                     ProjectCode = projectCode,
+                    TaskCode = taskCode,
                     Times = times.ToString()
                 });
 
