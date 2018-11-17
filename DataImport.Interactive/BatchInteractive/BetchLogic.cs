@@ -574,6 +574,7 @@ namespace DataImport.Interactive.BatchInteractive
             dataLog.LastUpdateIp = "127.0.0.1";
             dataLog.TypeName = this.dataScript.FID;
             dataLog.Version = this.times;
+            
             DataLogDAL.Insert(dataLog);
             return dataLog;
         }

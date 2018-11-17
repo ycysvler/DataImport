@@ -534,6 +534,9 @@ namespace DataImport.Interactive.DataScriptInteractive2
         {
             if (ProjectCode.SelectedValue == null)
                 return;
+            if (FileType.SelectedValue == null)
+                FileType.SelectedIndex = 0;
+
             //项目编号、试验名称、数据类型、解析器
             string projectcode = ProjectCode.SelectedValue.ToString();
             string taskname = TaskName.Text.Trim();
