@@ -297,6 +297,8 @@ namespace DataImport.Interactive.BatchInteractive
 
             bool inputOk = false;
 
+            string result = "导入成功！";
+
             switch (fileType)
             {
                 case ".xls":
@@ -315,8 +317,10 @@ namespace DataImport.Interactive.BatchInteractive
             {
                 if (isUpdate)
                 {
-                    updateDbByID();
+                    result = updateDbByID(); 
                 }
+
+                SendCompleteEvent(result);
             }
             else {
                 if (isUpdate)
@@ -328,7 +332,7 @@ namespace DataImport.Interactive.BatchInteractive
 
         
 
-        private void updateDbByID()
+        private string updateDbByID()
         {
             System.Data.OracleClient.OracleParameter[]
             ps = new System.Data.OracleClient.OracleParameter[7];
@@ -358,6 +362,7 @@ namespace DataImport.Interactive.BatchInteractive
             log.Info(string.Format("BetchLogic > updateDbByID > 更新结束:{0} : {1} {2} {3}", this.dataScriptRule.DesTable, DateTime.Now.ToString("HH:mm:ss"), prout[0], prout[1]));
             SendMessageEvent(string.Format("更新结束:{0} : {1}", this.dataScriptRule.DesTable, DateTime.Now.ToString("HH:mm:ss")));
 
+            return prout[1].ToString();
             SendCompleteEvent(prout[1].ToString());
             //TableDAL.DropTable(tableName);
         }
