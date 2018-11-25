@@ -28,6 +28,12 @@ namespace DataImport.DataAccess
             return result;
         }
 
+        public static int removeDataRow(string tableName, string projectId, int times) {
+
+            string sql = string.Format("delete from {0} where PROJECTID ='{1}' and TASKTIMES={2}", tableName, projectId, times);
+            return OracleHelper.Excuse(sql);
+        }
+
         public static string getTablePK(string tableName)
         {
             string sql = string.Format(@"select m.column_name from user_constraints s, user_cons_columns m   
