@@ -81,14 +81,12 @@ namespace DataImport.BLL
         public static bool uploadFile(string file, string name, string taskid, string type)
         {
             bool result = false;
-            try
-            {
+            
                 WebClient client = new WebClient();
                 string uri = string.Format("{0}?name={1}&id={2}&type={3}", ConfigurationManager.AppSettings["uploaduri"], name, taskid,type);
                 client.UploadFileAsync(new Uri(uri), file);
                 result = true;
-            }
-            catch (System.Exception e) { }
+             
             return result;
         }
 

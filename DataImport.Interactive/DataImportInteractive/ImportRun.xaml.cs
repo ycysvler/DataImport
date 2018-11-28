@@ -874,8 +874,18 @@ namespace DataImport.Interactive.DataImportInteractive
 
                         // 写入导入数据日志
                         DataLog dataLog = createLog(0, System.IO.Path.GetFileName(sourceFile));
-                        // 上传文件
-                        WebHelper.uploadFile(sourceFile, dataLog.FID, TaskCenter.TaskID);
+                        // 上传文件 
+                        try
+                        {
+                            //SendMessageEvent("开始上传文件：" + sourceFile);
+                            WebHelper.uploadFile(sourceFile, dataLog.FID, TaskCenter.TaskID);
+                            //SendMessageEvent("上传文件结束! ");
+                        }
+                        catch (System.Exception uex)
+                        {
+                            //SendMessageEvent(false, "上传文件异常! " + uex.Message);
+                        }
+
 
                         if (TaskCenter.CurrentInfo != null)
                         {

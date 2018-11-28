@@ -265,7 +265,16 @@ namespace DataImport.Interactive.BatchInteractive
             // 写入导入数据日志
             DataLog dataLog = createLog(0, System.IO.Path.GetFileName(sourceFile));
             // 上传文件
-            //WebHelper.uploadFile(sourceFile, dataLog.FID, TaskCenter.TaskID); 
+            try
+            {
+                SendMessageEvent("开始上传文件："+ sourceFile);
+                WebHelper.uploadFile(sourceFile, dataLog.FID, TaskCenter.TaskID);
+                SendMessageEvent( "上传文件结束! ");
+            }
+            catch (System.Exception uex) {
+                SendMessageEvent(false, "上传文件异常! " + uex.Message);
+            }
+            
             // 一个处理半物力实验数据的逻辑
             uploadFile();
             end = DateTime.Now;
