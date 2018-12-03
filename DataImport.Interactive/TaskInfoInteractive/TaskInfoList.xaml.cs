@@ -345,7 +345,7 @@ namespace DataImport.Interactive.TaskInfoInteractive
                     FileInfo finfo = new FileInfo(dialog.FileName);
                     long length = finfo.Length / 1024;
 
-                    string serverpath = string.Format(@"{0}\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"], info.deliverId, System.IO.Path.GetFileName(dialog.FileName));
+                    string serverpath = string.Format(@"{0}\groupDeliver\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"], info.deliverId, System.IO.Path.GetFileName(dialog.FileName));
 
                     WebHelper.addAtachFileInfo2Tdm(info.deliverId, System.IO.Path.GetFileName(dialog.FileName), length.ToString(), serverpath);
                     WebHelper.modifyTdmDeliveryListState(info.deliverId, "1");

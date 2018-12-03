@@ -548,7 +548,7 @@ namespace DataImport.Interactive.BatchInteractive
                 if (deliver != null)
                 {
                     FileInfo finfo = new FileInfo(sourceFile);
-                    string serverpath = string.Format(@"{0}\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                    string serverpath = string.Format(@"{0}\groupDeliver\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
                         deliver.deliverId, System.IO.Path.GetFileName(sourceFile));
 
                     WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);
@@ -558,7 +558,7 @@ namespace DataImport.Interactive.BatchInteractive
                 TaskCenter.CurrentInfo = null;
             }
         }
-
+        
         /// <summary>
         /// 当实验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
         /// </summary>

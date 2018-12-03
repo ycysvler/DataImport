@@ -894,7 +894,7 @@ namespace DataImport.Interactive.DataImportInteractive
                             if (deliver != null)
                             {
                                 FileInfo finfo = new FileInfo(sourceFile);
-                                string serverpath = string.Format(@"{0}\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                                string serverpath = string.Format(@"{0}\groupDeliver\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
                                     deliver.deliverId, System.IO.Path.GetFileName(sourceFile));
 
                                 WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);

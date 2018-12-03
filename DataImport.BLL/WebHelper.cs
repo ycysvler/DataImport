@@ -84,7 +84,7 @@ namespace DataImport.BLL
             
                 WebClient client = new WebClient();
                 string uri = string.Format("{0}?name={1}&id={2}&type={3}", ConfigurationManager.AppSettings["uploaduri"], name, taskid,type);
-                client.UploadFileAsync(new Uri(uri), file);
+                client.UploadFile(new Uri(uri), file);
                 result = true;
              
             return result;
