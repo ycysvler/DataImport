@@ -342,11 +342,15 @@ namespace DataImport.Interactive.TaskInfoInteractive
                 if (WebHelper.uploadFile(dialog.FileName, "", info.deliverId, "deliver"))
                 {
 
+
                     FileInfo finfo = new FileInfo(dialog.FileName);
                     long length = finfo.Length / 1024;
+                     
+                    string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
+                       System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                        System.IO.Path.GetFileName(dialog.FileName));
 
-                    string serverpath = string.Format(@"{0}\groupDeliver\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"], info.deliverId, System.IO.Path.GetFileName(dialog.FileName));
-
+                    
                     WebHelper.addAtachFileInfo2Tdm(info.deliverId, System.IO.Path.GetFileName(dialog.FileName), length.ToString(), serverpath);
                     WebHelper.modifyTdmDeliveryListState(info.deliverId, "1");
 

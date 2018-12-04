@@ -886,23 +886,39 @@ namespace DataImport.Interactive.DataImportInteractive
                             //SendMessageEvent(false, "上传文件异常! " + uex.Message);
                         }
 
+                        string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
+                       System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                        System.IO.Path.GetFileName(sourceFile));
 
-                        if (TaskCenter.CurrentInfo != null)
+                        // 这里记录一下上传的文件路径
+                        ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog()
                         {
-                            var deliver = TaskCenter.CurrentInfo.delivers.FirstOrDefault(it => it.deliverType == "半物理试验数据");
-                            // 半物理实验数据标志为以上传
-                            if (deliver != null)
-                            {
-                                FileInfo finfo = new FileInfo(sourceFile);
-                                string serverpath = string.Format(@"{0}\groupDeliver\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
-                                    deliver.deliverId, System.IO.Path.GetFileName(sourceFile));
+                            FileName = serverpath,
+                            CreatedBy = MainWindow.UserName,
+                            Content = "单次文件上传",
+                            ProjectCode = TaskCenter.CurrentInfo.projectCode,
+                            TaskCode = TaskCenter.CurrentInfo.taskCode,
+                            Times = TaskCenter.TaskTimes.ToString()
+                        });
 
-                                WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);
-                                WebHelper.modifyTdmDeliveryListState(deliver.deliverId, "1");
-                            }
-                            // 修改完上传状态，释放
-                            TaskCenter.CurrentInfo = null;
-                        }
+                       // if (TaskCenter.CurrentInfo != null)
+                       // {
+                       //     var deliver = TaskCenter.CurrentInfo.delivers.FirstOrDefault(it => it.deliverType == "半物理试验数据");
+                       //     // 半物理实验数据标志为以上传
+                       //     if (deliver != null)
+                       //     {
+                       //         FileInfo finfo = new FileInfo(sourceFile);
+                                
+                       //         string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
+                       //System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                       // System.IO.Path.GetFileName(sourceFile));
+
+                       //         WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);
+                       //         WebHelper.modifyTdmDeliveryListState(deliver.deliverId, "1");
+                       //     }
+                       //     // 修改完上传状态，释放
+                       //     TaskCenter.CurrentInfo = null;
+                       // }
                         DateTime begin = DateTime.Now;
 
                         if (fileType == "mdb")

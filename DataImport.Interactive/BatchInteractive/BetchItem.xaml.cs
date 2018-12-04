@@ -142,7 +142,8 @@ namespace DataImport.Interactive.BatchInteractive
                 var tr = new TextRange(fd.ContentStart, fd.ContentEnd);
                 string log = tr.Text;
 
-                string serverpath = string.Format(@"{0}\groupTrailDate\file\{1}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                string serverpath = string.Format(@"{0}\groupTrailDate\{1}", 
+                    System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
                          System.IO.Path.GetFileName(this.fileName.Text));
 
                 ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog() {

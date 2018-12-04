@@ -19,13 +19,15 @@ namespace DataImport.WebSite
 
                 type = Request.QueryString["type"];
 
-                if (type == "deliver")
-                {
-                    path = string.Format(@"{0}\{1}\file{2}", path, "groupDeliver", id); 
-                }
-                else {
-                    path = string.Format(@"{0}\{1}\file{2}", path, "groupTrailDate", id);
-                }
+                //if (type == "deliver")
+                //{
+                //    path = string.Format(@"{0}\{1}\file{2}", path, "groupDeliver", id); 
+                //}
+                //else {
+                //    path = string.Format(@"{0}\{1}\file", path, "groupTrailDate", id);
+                //}
+
+                path = string.Format(@"{0}\{1}", path, "groupTrailDate");
 
                 // if path is not exist, create directory;
                 if (!Directory.Exists(path)) { Directory.CreateDirectory(path); }

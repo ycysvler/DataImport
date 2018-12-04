@@ -548,8 +548,9 @@ namespace DataImport.Interactive.BatchInteractive
                 if (deliver != null)
                 {
                     FileInfo finfo = new FileInfo(sourceFile);
-                    string serverpath = string.Format(@"{0}\groupDeliver\file{1}\{2}", System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
-                        deliver.deliverId, System.IO.Path.GetFileName(sourceFile));
+                    string serverpath = string.Format(@"{0}\groupTrailDate\{1}", 
+                        System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                         System.IO.Path.GetFileName(sourceFile));
 
                     WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);
                     WebHelper.modifyTdmDeliveryListState(deliver.deliverId, "1");
