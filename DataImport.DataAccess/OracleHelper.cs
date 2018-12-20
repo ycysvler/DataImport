@@ -95,6 +95,50 @@ namespace DataImport.DataAccess
             }
         }
 
+        public static bool ExecuteSqlBat(int recordCount, string sql, params OracleParameter[] param)
+        {
+            bool result = false;
+
+            if (recordCount < 1)
+                return false;
+            string connectionString = ConfigurationManager.ConnectionStrings["oracle"].ConnectionString;
+            OracleConnection conn = new OracleConnection(connectionString);
+            OracleCommand command = new OracleCommand();
+            command.Connection = conn;
+            conn.Open();
+            OracleTransaction tx = conn.BeginTransaction();
+            try
+            {
+                //这个参数需要指定每次批插入的记录数  
+                //command.ArrayBindCount = recordCount;
+                //用到的是数组,而不是单个的值,这就是它独特的地方  
+                command.CommandText = sql;
+
+                for (int i = 0; i < param.Length; i++)
+                {
+                    OracleParameter oparam = param[i];
+                    command.Parameters.Add(oparam);
+                }
+
+                //这个调用将把参数数组传进SQL,同时写入数据库  
+                command.ExecuteNonQuery();
+                tx.Commit();
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                result = false;
+
+                tx.Rollback();
+                throw ex;
+
+            }
+
+            return result;
+
+        }
+
         public static object Scalar(string sql)
         {
             log.Debug(string.Format("\t{0}", sql));

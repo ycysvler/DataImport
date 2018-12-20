@@ -29,6 +29,9 @@ namespace DataImport.Interactive.BatchInteractive
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
+
+            panel.Children.Clear();
+
             System.Windows.Forms.FolderBrowserDialog m_Dialog = new System.Windows.Forms.FolderBrowserDialog();
             System.Windows.Forms.DialogResult result = m_Dialog.ShowDialog();
 

@@ -116,6 +116,7 @@
       <DependentUpon>BetchItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="BatchInteractive\BetchLogic.cs" />
+    <Compile Include="BatchInteractive\BetchLogic3.cs" />
     <Compile Include="BatchInteractive\BetchLogic2.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Controls\ChartDateItem.xaml.cs">

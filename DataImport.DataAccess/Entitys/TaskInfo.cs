@@ -57,7 +57,7 @@ namespace DataImport.DataAccess.Entitys
 
             result.id = dr["ID"].ToString();
             result.taskType = dr["TASK_TYPE"].ToString(); 
-            result.projectCode = dr["ATTRIBUTE_07"].ToString();
+            result.projectCode = dr["PROJECT_CODE"].ToString();
             result.projectName = dr["PROJECT_NAME"].ToString();
 
             result.planSdate = dr["PLAN_S_DATE"].ToString();

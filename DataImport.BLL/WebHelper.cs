@@ -90,6 +90,27 @@ namespace DataImport.BLL
             return result;
         }
 
+        public static string GetHttp(string url)
+        { 
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+             
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Timeout = 20000;
+
+            //byte[] btBodys = Encoding.UTF8.GetBytes(body);
+            //httpWebRequest.ContentLength = btBodys.Length;
+            //httpWebRequest.GetRequestStream().Write(btBodys, 0, btBodys.Length);
+
+            HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream());
+            string responseContent = streamReader.ReadToEnd();
+
+            httpWebResponse.Close();
+            streamReader.Close();
+
+            return responseContent;
+        }
+
         public static string Login(string loginname, string password)
         {
 

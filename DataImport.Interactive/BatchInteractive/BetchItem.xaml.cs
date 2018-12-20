@@ -62,7 +62,7 @@ namespace DataImport.Interactive.BatchInteractive
                     int.TryParse(t2[3], out times);
                 }
 
-                BetchLogic2 bl = new BetchLogic2(
+                BetchLogic3 bl = new BetchLogic3(
                     MainWindow.UserID, MainWindow.UserName,
                     projectCode, taskCode, scriptCode, times, this.fileName.Text);
 

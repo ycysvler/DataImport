@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
+using System.Web.Caching;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -33,9 +34,17 @@ namespace DataImport.WebSite
                 if (!Directory.Exists(path)) { Directory.CreateDirectory(path); }
 
                 HttpPostedFile file = Request.Files[f];
-                
-                string filename = string.Format("{0}{1}", Request["name"], Path.GetExtension(file.FileName));
-                file.SaveAs(path + "\\" + Path.GetFileName(file.FileName));
+
+                string key = System.IO.Path.GetFileName(file.FileName);
+                HttpRuntime.Cache["key"]="";
+
+                string name = Path.GetFileName(file.FileName);
+
+                if (this.Request.QueryString["name"] != null)
+                    name = this.Request.QueryString["name"];
+
+
+                file.SaveAs(path + "\\" + name);
             }
         }
     }
