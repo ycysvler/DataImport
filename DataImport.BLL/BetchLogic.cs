@@ -9,6 +9,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DataImport.BLL 
@@ -28,8 +29,7 @@ namespace DataImport.BLL
 
     public class BetchLogic
     {
-        log4net.ILog log = log4net.LogManager.GetLogger("RollingLogFileAppender");
-
+        
         TaskInfo taskInfo = null;
         DataScript dataScript = null;
         DataScriptRule dataScriptRule = null;
@@ -40,6 +40,7 @@ namespace DataImport.BLL
         string taskCode = "";
         string scriptCode = "";
         string userName = "";
+        string projectCode = "";
         int baseline = 0;
         int times = 0;
         int allcount = 0;
@@ -57,9 +58,10 @@ namespace DataImport.BLL
         public BetchLogic(string userID, string userName, string projectCode, string taskCode, string scriptCode, int times, string sourceFile)
         {
             this.userID = userID;
+            this.projectCode = projectCode;
             this.userName = userName;
             this.taskCode = taskCode;
-            this.times = times;
+            this.times = times;  
             this.scriptCode = scriptCode;
             this.sourceFile = sourceFile;
         }
@@ -75,7 +77,8 @@ namespace DataImport.BLL
                 return false;
             }
 
-            this.taskInfo = taskInfoList.FirstOrDefault(it => it.taskCode == taskCode);
+            this.taskInfo = taskInfoList.FirstOrDefault( it => it.projectCode == projectCode && it.taskCode == taskCode);
+            
 
             if (taskInfo == null)
             {
@@ -214,6 +217,8 @@ namespace DataImport.BLL
 
         private void SendCompleteEvent(string message)
         {
+            Thread.Sleep(1000);
+
             if (CompleteEvent != null)
             {
                 CompleteEvent(this, new CompleteArgs() { Message = "end:" + message });
@@ -225,15 +230,13 @@ namespace DataImport.BLL
             SendMessageEvent(string.Format("开始处理数据文件：{0}", sourceFile));
             DateTime begin = DateTime.Now, end = DateTime.Now;
             this.tableName = this.dataScriptRule.DesTable;
-            log.Info(string.Format("BetchLogic > updateDbByID > 删除数据:{0} -> taskid: {1}  times: {2}", tableName,this.taskInfo.id, this.times));
-            SendMessageEvent(string.Format("目标表 [ {0} ] ，开始计算，请稍后！", this.dataScriptRule.DesTable));
+             SendMessageEvent(string.Format("目标表 [ {0} ] ，开始计算，请稍后！", this.dataScriptRule.DesTable));
             this.isUpdate = checkTestTimes();
 
             // 判断源表是否存在 
             if (TableDAL.getTableStructure(this.dataScriptRule.DesTable).Count == 0)
             {
                 // 源表不存在
-                log.Error(string.Format("BetchLogic > run > 目标表 [ {0} ] 不存在", this.dataScriptRule.DesTable));
                 SendMessageEvent(false, string.Format("目标表 [ {0} ] 不存在", this.dataScriptRule.DesTable));
                 SendCompleteEvent("导入失败");
                 return;
@@ -295,7 +298,6 @@ namespace DataImport.BLL
             // 根据分隔符计算列是否有问题
             if (columnNames.Length <= 1)
             {
-                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
                 SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.getColSeperatorChar()));
                 SendCompleteEvent("导入失败");
                 return false;
@@ -304,8 +306,7 @@ namespace DataImport.BLL
             DataTable dt = TextImportHelper.GetDataTable(this.sourceFile, this.dataScriptRule.getColSeperatorChar());
             if (dt.Columns.Count <= 1)
             {
-                log.Error(string.Format("BetchLogic > txt2db > 文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.ColSperator));
-                SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.getColSeperatorChar()));
+                 SendMessageEvent(false, string.Format("文件与规则的分隔符 [ {0} ] 不匹配", this.dataScriptRule.getColSeperatorChar()));
                 SendCompleteEvent("导入失败");
                 return false;
             }
@@ -319,8 +320,7 @@ namespace DataImport.BLL
             // 如果是temp表，去掉无用列
             if (tableName != this.dataScriptRule.DesTable)
             {
-                dropColumn(tableName, columnNames, structList);
-                log.Info(string.Format("BetchLogic > run > 判断临时表，去掉扩展列"));
+                dropColumn(tableName, columnNames, structList); 
             }
 
             for (int i = 0; i < columnNames.Length; i++)
@@ -330,8 +330,7 @@ namespace DataImport.BLL
             }
             DateTime begin = DateTime.Now;
             Console.WriteLine(begin);
-
-            log.Info(string.Format("BetchLogic > run > 开始导入:{0}", begin));
+             
 
             StreamReader sr = new StreamReader(sourceFile, Encoding.Default);
             string header = sr.ReadLine();
@@ -355,6 +354,7 @@ namespace DataImport.BLL
                 {
                     SendMessageEvent(false, string.Format("[{0}]\r\n[{1}]\r\n列头共 [ {2} ] 列，与行数据 [ {3} ] 列不匹配,请检查数据数量及分隔符；",
                         header, row, columnNames.Length, columnDatas.Length));
+                    
                     SendCompleteEvent("导入失败");
                     return false;
                 }
@@ -370,15 +370,13 @@ namespace DataImport.BLL
                 if (dataTable.Rows.Count >= 10000)
                 {
                     insertDataTable(dataTable, structList, tableName);
-                    dataTable.Rows.Clear();
-                    log.Info(string.Format("BetchLogic > run > 凑够10000行写一次库 :{0}", count));
+                    dataTable.Rows.Clear(); 
                     SendMessageEvent(string.Format("写入数据：{0} , 表 [ {1} ]", count + 1, tableName));
                 }
                 count++;
             }
             sr.Close();
-
-            log.Info(string.Format("BetchLogic > run > 全部写入完成:{0}", count));
+             
             SendMessageEvent(string.Format("写完数据：{0} , 表 [ {1} ]", count, tableName));
 
             return true;
@@ -627,8 +625,7 @@ namespace DataImport.BLL
                 //TableDAL.DropTable(tableName);
             }
             catch (System.Exception ex)
-            {
-                log.Error(string.Format("BetchLogic > run > insertDataTable > {0}", ex));
+            { 
                 SendMessageEvent(false, "遇到异常：" + ex.ToString());
             }
             baseline += dataTable.Rows.Count;

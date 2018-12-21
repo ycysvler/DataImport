@@ -29,6 +29,7 @@ namespace DataImport.Interactive.BatchInteractive
         string taskCode = "";
         string scriptCode = "";
         string userName = "";
+        string projectCode = "";
         int baseline = 0;
         int times = 0;
         int allcount = 0;
@@ -49,6 +50,7 @@ namespace DataImport.Interactive.BatchInteractive
             this.userName = userName;
             this.taskCode = taskCode;
             this.times = times;
+            this.projectCode = projectCode;
             this.scriptCode = scriptCode;
             this.sourceFile = sourceFile;
         }
@@ -64,11 +66,17 @@ namespace DataImport.Interactive.BatchInteractive
                 return false;
             }
 
-            this.taskInfo = taskInfoList.FirstOrDefault(it => it.taskCode == taskCode);
+            this.taskInfo = taskInfoList.FirstOrDefault(it => it.projectCode == projectCode && it.taskCode == taskCode);
 
             if (taskInfo == null)
             {
                 SendMessageEvent(false, string.Format("任务[{0}],不存在", taskCode));
+                CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败" });
+                return false;
+            }
+
+            if (DataScriptDAL.getTaskScriptCount(taskInfo.id, scriptCode) == 0) {
+                SendMessageEvent(false, string.Format("解析器[{0}],没有配置在任务[{1}]下", scriptCode,taskCode));
                 CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败" });
                 return false;
             }
@@ -223,7 +231,11 @@ namespace DataImport.Interactive.BatchInteractive
             }
         }
 
-        public void run()
+        public void run() {
+            run(System.IO.Path.GetFileName(sourceFile));
+        }
+
+        public void run(string fname)
         {
             SendMessageEvent(string.Format("开始处理数据文件：{0}", sourceFile));
             DateTime begin = DateTime.Now, end = DateTime.Now;
@@ -236,7 +248,7 @@ namespace DataImport.Interactive.BatchInteractive
             try
             {
                 SendMessageEvent("开始上传文件："+ sourceFile);
-                WebHelper.uploadFile(sourceFile, System.IO.Path.GetFileName(sourceFile), TaskCenter.TaskID);
+                WebHelper.uploadFile(sourceFile, fname, TaskCenter.TaskID);
                 SendMessageEvent( "上传文件结束! ");
             }
             catch (System.Exception uex) {
@@ -246,7 +258,7 @@ namespace DataImport.Interactive.BatchInteractive
 
             // 启动导入 
             string importurl =  string.Format("{0}?filename={1}&username={2}&userid={3}",
-                ConfigurationManager.AppSettings["importuri"], System.IO.Path.GetFileName(sourceFile),this.userName, this.userID );
+                ConfigurationManager.AppSettings["importuri"], fname, this.userName, this.userID );
 
 
             WebHelper.GetHttp(importurl);
@@ -254,7 +266,7 @@ namespace DataImport.Interactive.BatchInteractive
             while (true) {
                 string msgurl = string.Format("{0}?filename={1}",
                 ConfigurationManager.AppSettings["messageuri"],
-                System.IO.Path.GetFileName(sourceFile));
+                fname);
 
                 string result = WebHelper.GetHttp(msgurl);
 

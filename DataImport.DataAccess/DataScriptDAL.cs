@@ -10,6 +10,20 @@ namespace DataImport.DataAccess
 {
     public class DataScriptDAL
     {
+        /// <summary>
+        /// 任务下是否有配置script
+        /// </summary>
+        /// <param name="taskid"></param>
+        /// <param name="scriptCode"></param>
+        /// <returns></returns>
+        public static int getTaskScriptCount(string taskid,string scriptCode) {
+            string sql = string.Format("select count(1) from mpm.pm_task_info pti left join import.mds_imp_data_script s on instr(pti.resolver_task_id, s.fid) > 0 where pti.id='{0}' and s.mids_script_code='{1}'", taskid, scriptCode);
+
+            int count = Convert.ToInt32( OracleHelper.Scalar(sql).ToString());
+            return count;
+        }
+
+
         public static List<DataScript> getList() {
 
             List<DataScript> result = new List<DataScript>();

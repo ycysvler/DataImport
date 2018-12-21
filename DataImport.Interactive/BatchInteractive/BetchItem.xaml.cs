@@ -146,13 +146,18 @@ namespace DataImport.Interactive.BatchInteractive
                     System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
                          System.IO.Path.GetFileName(this.fileName.Text));
 
+                System.IO.FileInfo objFI = new System.IO.FileInfo(this.fileName.Text);
+                string fileSize = objFI.Length.ToString();
+
                 ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog() {
                     FileName = serverpath,
                     CreatedBy = MainWindow.UserName,
                     Content = tr.Text.Replace("\r\n", "<br />"),
                     ProjectCode = projectCode,
                     TaskCode = taskCode,
-                    Times = times.ToString()
+                    Times = times.ToString(),
+                    FileSize = fileSize
+
                 });
 
                 if (fd.Blocks.Count > 100)

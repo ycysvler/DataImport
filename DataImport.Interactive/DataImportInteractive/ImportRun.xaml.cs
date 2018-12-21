@@ -1,6 +1,7 @@
 ﻿using DataImport.BLL;
 using DataImport.DataAccess;
 using DataImport.DataAccess.Entitys;
+using DataImport.Interactive.BatchInteractive;
 using DataImport.Interactive.TaskInfoInteractive;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting; 
@@ -62,7 +63,50 @@ namespace DataImport.Interactive.DataImportInteractive
         public Dictionary<string, string> ScriptMap { get; set; }
 
         private void btRun_Click(object sender, RoutedEventArgs e)
-        {
+        { 
+            BetchLogic3 bl = new BetchLogic3(
+                   MainWindow.UserID, MainWindow.UserName,
+                   DataScript.ProjectCode, TaskCenter.CurrentInfo.taskCode, TaskCenter.ScriptCode, TaskCenter.TaskTimes, sourceFile);
+             
+            bl.CompleteEvent += Bl_CompleteEvent;
+            bl.MessageEvent += Bl_MessageEvent;
+
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                if (bl.init())
+                {
+                    try
+                    {
+                        bl.run(string.Format("{0}@{1},{2},{3},{4}{5}",
+                            DataScript.ScriptTypeName, 
+                            DataScript.ProjectCode, 
+                            TaskCenter.CurrentInfo.taskCode,
+                            TaskCenter.ScriptCode,
+                            TaskCenter.TaskTimes,
+                            System.IO.Path.GetExtension(sourceFile))
+                            );
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Dispatcher.BeginInvoke((Delegate)new Action(() =>
+                        {
+                            Paragraph paragraph = new Paragraph();
+                            Run runflg = new Run("数据导入失败\r\n" + ex.ToString());
+                            runflg.Foreground = new SolidColorBrush(Colors.Red);
+                            paragraph.Inlines.Add(runflg);
+                            fd.Blocks.Add(paragraph);
+                        })); 
+                    }
+                    finally
+                    {
+
+                    }
+                }
+            }));
+            thread.Start();
+
+            // 后面是以前的逻辑
+            return;
             if (!string.IsNullOrEmpty(runTime.Text.Trim()))
             {
                 DateTime time;
@@ -94,6 +138,45 @@ namespace DataImport.Interactive.DataImportInteractive
 
             }
 
+        }
+
+        private void Bl_MessageEvent(object sender, BatchInteractive.MessageArgs e)
+        {
+            Dispatcher.BeginInvoke((Delegate)new Action(() =>
+            {  
+                Paragraph paragraph = new Paragraph();
+                Run runflg = new Run(e.Message["message"].ToString());
+                runflg.Foreground = new SolidColorBrush(Colors.Green);
+                paragraph.Inlines.Add(runflg);
+                fd.Blocks.Add(paragraph);
+            }));
+        }
+
+        private void Bl_CompleteEvent(object sender, BatchInteractive.CompleteArgs e)
+        {
+            Dispatcher.BeginInvoke((Delegate)new Action(() =>
+            {
+                title.Text = string.Format("数据导入完成");
+            }));
+
+            MessageBox.Show("导入数据结束");
+
+            Dispatcher.BeginInvoke((Delegate)new Action(() =>
+            {
+                try
+                {
+                    TaskInfoList mapModify = new TaskInfoList();
+                    MainWindow window = App.Current.MainWindow as MainWindow;
+                    window.StartPage(mapModify);
+                }
+                catch (System.Exception ex)
+                {
+
+                    LogHelper.WriteLog(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                }
+
+            }));
         }
 
         event RoutedPropertyChangedEventHandler<double> progresssChanged;

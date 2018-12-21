@@ -14,6 +14,7 @@ namespace DataImport.DataAccess.Entitys
         public string Times { get; set; } 
         public string CreatedBy { get; set; }
         public DateTime CreationDate { get; set; }  
+        public string FileSize { get; set; }
         
     }
 }
