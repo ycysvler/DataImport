@@ -46,6 +46,8 @@
 
                         <Button x:Name="loginButton"  Margin="11,105,0,14" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="loginButton_Click" Content="登 录" />
                         <Button x:Name="exitButton"  Margin="146,105,0,14" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle1}" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="exitButton_Click" Content="退 出" />
+
+                         
                     </Grid>
                 </Border>
             </Grid>

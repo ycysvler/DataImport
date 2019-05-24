@@ -59,6 +59,10 @@ namespace DataImport.Interactive.DataScriptInteractive2
             ProjectCode.ItemsSource = projectList;
             ProjectCode.DisplayMemberPath = "ProjectName";
             ProjectCode.SelectedValuePath = "ProjectCode";
+
+            ProjectCode.KeyUp += ProjectCode_KeyUp;
+
+
             if (projectList.Count > 0)
                 ProjectCode.SelectedIndex = 0;
             ScriptType.SelectedIndex = 0;
@@ -77,6 +81,13 @@ namespace DataImport.Interactive.DataScriptInteractive2
                 showData();
 
             }
+        }
+
+        private void ProjectCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            List<Project> list = ProjectCode.ItemsSource as List<Project>; 
+            ProjectCode.ItemsSource = list.Where((i) => i.ProjectName.Contains(ProjectCode.Text.Trim())); 
+            ProjectCode.IsDropDownOpen = true;
         }
 
         DataScript dScript;
@@ -573,7 +584,15 @@ namespace DataImport.Interactive.DataScriptInteractive2
             list.Insert(0, "新增试验");
 
             TaskNameList.ItemsSource = list;
+            TaskNameList.KeyUp += TaskNameList_KeyUp;
             getScriptCode();
+        }
+
+        private void TaskNameList_KeyUp(object sender, KeyEventArgs e)
+        {
+            List<string> list = TaskNameList.ItemsSource as List<string>;
+            TaskNameList.ItemsSource = list.Where((i) => i.Contains(TaskNameList.Text.Trim()));
+            TaskNameList.IsDropDownOpen = true;
         }
 
         private void TaskName_TextChanged(object sender, TextChangedEventArgs e)

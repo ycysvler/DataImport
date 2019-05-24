@@ -1,6 +1,7 @@
 ﻿using DataImport.BLL;
 using DataImport.BLL.TdmToZkWebservice;
 using DataImport.DataAccess;
+using DataImport.DataAccess.Entitys;
 using DataImport.Interactive.BatchInteractive;
 using DataImport.Interactive.DataImportInteractive;
 using DataImport.Interactive.DataScriptInteractive;
@@ -95,7 +96,11 @@ namespace DataImport.Interactive
                 window.StartPage(item);
             }
 
+            
         }
+
+        
+
         private void Close_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (SequencesView != null)
