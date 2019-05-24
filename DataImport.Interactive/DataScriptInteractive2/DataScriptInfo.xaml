@@ -54,7 +54,7 @@
                     </Grid.ColumnDefinitions>
                     <!--第0行-->
                     <TextBlock Grid.Column="0" Grid.Row="0"><Run Text="项目"/></TextBlock>
-                    <TextBlock Grid.Column="2" Grid.Row="0"><Run Text="实验名称"/></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="0"><Run Text="试验名称"/></TextBlock>
                     <TextBlock Grid.Column="4" Grid.Row="1"><Run Text="解析器类型"/></TextBlock>
 
                     <ComboBox  Name="ProjectCode" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" SelectedIndex="0" SelectionChanged="ProjectCode_SelectionChanged"  ></ComboBox>

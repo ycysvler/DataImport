@@ -40,7 +40,7 @@ namespace DataImport.Interactive.BatchInteractive
         public event EventHandler<ProgressArgs> ProgressEvent;
         public event EventHandler<CompleteArgs> CompleteEvent;
 
-        bool isUpdate = false;  // 当实验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
+        bool isUpdate = false;  // 当试验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
 
         string tableName = "";
          
@@ -85,7 +85,7 @@ namespace DataImport.Interactive.BatchInteractive
 
             if (dataSource.Count(it => it.TestTime == this.times.ToString()) < 1)
             {
-                SendMessageEvent(false, string.Format("任务 [ {0} ] ,实验次数 [ {1} ] 不存在，", taskCode, this.times));
+                SendMessageEvent(false, string.Format("任务 [ {0} ] ,试验次数 [ {1} ] 不存在，", taskCode, this.times));
                 CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败" });
                 return false;
             }

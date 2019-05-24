@@ -191,7 +191,7 @@ namespace DataImport.DataAccess
                 OracleHelper.Query(comment);
                 comment = string.Format("comment on column {0}.LAST_UPDATE_DATE is '更新时间'", tableName);
                 OracleHelper.Query(comment);
-                comment = string.Format("comment on column {0}.TASKTIMES is '实验次数'", tableName);
+                comment = string.Format("comment on column {0}.TASKTIMES is '试验次数'", tableName);
                 OracleHelper.Query(comment);
 
                

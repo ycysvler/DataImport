@@ -36,7 +36,7 @@ namespace DataImport.Interactive.BatchInteractive
         public event EventHandler<ProgressArgs> ProgressEvent;
         public event EventHandler<CompleteArgs> CompleteEvent;
 
-        bool isUpdate = false;  // 当实验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
+        bool isUpdate = false;  // 当试验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
 
         string tableName = "";
 
@@ -111,7 +111,7 @@ namespace DataImport.Interactive.BatchInteractive
 
             if (dataSource.Count(it => it.TestTime == this.times.ToString()) < 1)
             {
-                SendMessageEvent(false, string.Format("任务 [ {0} ] ,实验次数 [ {1} ] 不存在，", taskCode, this.times));
+                SendMessageEvent(false, string.Format("任务 [ {0} ] ,试验次数 [ {1} ] 不存在，", taskCode, this.times));
                 CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败" });
                 return false;
             }
@@ -274,8 +274,8 @@ namespace DataImport.Interactive.BatchInteractive
             catch (System.Exception uex) {
                 SendMessageEvent(false, "上传文件异常! " + uex.Message);
             }
-            
-            // 一个处理半物力实验数据的逻辑
+
+            // 一个处理半物力试验数据的逻辑
             uploadFile();
             end = DateTime.Now;
             SendMessageEvent(string.Format("上传数据文件，耗时：{0}秒", (end - begin).TotalSeconds));
@@ -284,7 +284,7 @@ namespace DataImport.Interactive.BatchInteractive
 
             string fileType = System.IO.Path.GetExtension(this.sourceFile);
 
-            // 判断本次实验，有没有解析器执行过, 创建临时表
+            // 判断本次试验，有没有解析器执行过, 创建临时表
             if (isUpdate)
             {
                 Structure st = structList.FirstOrDefault(it => it.Comments == System.Configuration.ConfigurationManager.AppSettings["pk"]);
@@ -537,14 +537,14 @@ namespace DataImport.Interactive.BatchInteractive
         }
 
         /// <summary>
-        /// 不知道为什么有个半物力实验数据的上传逻辑
+        /// 不知道为什么有个半物力试验数据的上传逻辑
         /// </summary>
         private void uploadFile()
         {
             if (this.taskInfo != null)
             {
                 var deliver = this.taskInfo.delivers.FirstOrDefault(it => it.deliverType == "半物理试验数据");
-                // 半物理实验数据标志为以上传
+                // 半物理试验数据标志为以上传
                 if (deliver != null)
                 {
                     FileInfo finfo = new FileInfo(sourceFile);
@@ -559,9 +559,9 @@ namespace DataImport.Interactive.BatchInteractive
                 TaskCenter.CurrentInfo = null;
             }
         }
-        
+
         /// <summary>
-        /// 当实验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
+        /// 当试验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
         /// </summary>
         /// <returns></returns>
         private bool checkTestTimes()
@@ -569,7 +569,7 @@ namespace DataImport.Interactive.BatchInteractive
             int count = TableDAL.removeDataRow(this.dataScriptRule.DesTable, this.taskInfo.id, this.times);
             return false;
 
-            // 判断本次实验，有没有解析器执行过
+            // 判断本次试验，有没有解析器执行过
             if (DataLogDAL.getList(this.taskInfo.id).Count(it => Convert.ToInt32(it.Version) == this.times) > 0)
             {
                 return false;

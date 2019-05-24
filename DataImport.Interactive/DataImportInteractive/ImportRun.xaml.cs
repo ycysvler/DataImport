@@ -931,7 +931,7 @@ namespace DataImport.Interactive.DataImportInteractive
                         string tableName = DataScriptRule.DesTable;
 
 
-                        // 判断本次实验，有没有解析器执行过
+                        // 判断本次试验，有没有解析器执行过
                         if (DataLogDAL.getList(TaskCenter.TaskID).Count(it => Convert.ToInt32(it.Version) == TaskCenter.TaskTimes) > 0)
                         {
 
@@ -984,24 +984,24 @@ namespace DataImport.Interactive.DataImportInteractive
                             Times = TaskCenter.TaskTimes.ToString()
                         });
 
-                       // if (TaskCenter.CurrentInfo != null)
-                       // {
-                       //     var deliver = TaskCenter.CurrentInfo.delivers.FirstOrDefault(it => it.deliverType == "半物理试验数据");
-                       //     // 半物理实验数据标志为以上传
-                       //     if (deliver != null)
-                       //     {
-                       //         FileInfo finfo = new FileInfo(sourceFile);
-                                
-                       //         string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
-                       //System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
-                       // System.IO.Path.GetFileName(sourceFile));
+                        // if (TaskCenter.CurrentInfo != null)
+                        // {
+                        //     var deliver = TaskCenter.CurrentInfo.delivers.FirstOrDefault(it => it.deliverType == "半物理试验数据");
+                        //     // 半物理试验数据标志为以上传
+                        //     if (deliver != null)
+                        //     {
+                        //         FileInfo finfo = new FileInfo(sourceFile);
 
-                       //         WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);
-                       //         WebHelper.modifyTdmDeliveryListState(deliver.deliverId, "1");
-                       //     }
-                       //     // 修改完上传状态，释放
-                       //     TaskCenter.CurrentInfo = null;
-                       // }
+                        //         string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
+                        //System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                        // System.IO.Path.GetFileName(sourceFile));
+
+                        //         WebHelper.addAtachFileInfo2Tdm(deliver.deliverId, System.IO.Path.GetFileName(sourceFile), (finfo.Length / 1024).ToString(), serverpath);
+                        //         WebHelper.modifyTdmDeliveryListState(deliver.deliverId, "1");
+                        //     }
+                        //     // 修改完上传状态，释放
+                        //     TaskCenter.CurrentInfo = null;
+                        // }
                         DateTime begin = DateTime.Now;
 
                         if (fileType == "mdb")

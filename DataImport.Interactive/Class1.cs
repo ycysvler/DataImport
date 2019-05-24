@@ -32,7 +32,7 @@ namespace DataImport.Interactive
         int successCount = 0;
 
 
-        bool isUpdate = false;  // 当实验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
+        bool isUpdate = false;  // 当试验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
 
         string tableName = "";
 
@@ -134,7 +134,7 @@ namespace DataImport.Interactive
             DataLog dataLog = createLog(0, System.IO.Path.GetFileName(sourceFile));
             // 上传文件
             WebHelper.uploadFile(sourceFile, dataLog.FID, TaskCenter.TaskID);
-            // 一个处理半物力实验数据的逻辑
+            // 一个处理半物力试验数据的逻辑
             uploadFile();
 
             string fileType = System.IO.Path.GetExtension(this.sourceFile);
@@ -288,14 +288,14 @@ namespace DataImport.Interactive
         }
 
         /// <summary>
-        /// 不知道为什么有个半物力实验数据的上传逻辑
+        /// 不知道为什么有个半物力试验数据的上传逻辑
         /// </summary>
         private void uploadFile()
         {
             if (this.taskInfo != null)
             {
                 var deliver = this.taskInfo.delivers.FirstOrDefault(it => it.deliverType == "半物理试验数据");
-                // 半物理实验数据标志为以上传
+                // 半物理试验数据标志为以上传
                 if (deliver != null)
                 {
                     FileInfo finfo = new FileInfo(sourceFile);
@@ -311,12 +311,12 @@ namespace DataImport.Interactive
         }
 
         /// <summary>
-        /// 当实验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
+        /// 当试验次数重复时候,是更新逻辑这里为true,那么注意一下表名,用临时表名
         /// </summary>
         /// <returns></returns>
         private bool checkTestTimes()
         {
-            // 判断本次实验，有没有解析器执行过
+            // 判断本次试验，有没有解析器执行过
             if (DataLogDAL.getList(this.taskInfo.id).Count(it => Convert.ToInt32(it.Version) == this.times) > 0)
             {
 

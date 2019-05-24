@@ -161,7 +161,7 @@ namespace DataImport.Interactive.DataScriptInteractive2
 
             if (string.IsNullOrEmpty(TaskName.Text.Trim()))
             {
-                erromsg += "请输入实验名称！\r\n";
+                erromsg += "请输入试验名称！\r\n";
             }
             if (string.IsNullOrEmpty(MidsScriptName.Text.Trim()))
             {
@@ -570,7 +570,7 @@ namespace DataImport.Interactive.DataScriptInteractive2
             }
             string projectcode = ProjectCode.SelectedValue.ToString();
             List<string> list = scripts.Where(it => it.ProjectCode == projectcode).Select(it => it.TaskName).ToList().Distinct().ToList();
-            list.Insert(0, "新增实验");
+            list.Insert(0, "新增试验");
 
             TaskNameList.ItemsSource = list;
             getScriptCode();

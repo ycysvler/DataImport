@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataImport.Interactive", "DataImport.Interactive\DataImport.Interactive.csproj", "{FDF1B3A7-4C20-4981-800E-D54BFFBA5FF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataImport.BLL", "DataImport.BLL\DataImport.BLL.csproj", "{2FF4544D-9598-4D72-9897-B2F3A2C70F63}"
@@ -96,5 +98,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF578FEF-1825-46DA-9684-6466584C4DBB}
 	EndGlobalSection
 EndGlobal

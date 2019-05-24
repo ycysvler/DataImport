@@ -165,7 +165,7 @@ namespace DataImport.Interactive.TaskInfoInteractive
                         }
                         if (dataSource.Count > logs.Count)
                         {
-                            // 说明有的实验任务，还没执行过
+                            // 说明有的试验任务，还没执行过
                             // 有人说时有时无，先去掉这个判断逻辑
                             //addTimes.Visibility = System.Windows.Visibility.Hidden;
                         }
