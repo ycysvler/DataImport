@@ -38,6 +38,7 @@ namespace DataImport.Interactive.DataScriptInteractive2
 
         private List<TableInfo> tables = new List<TableInfo>();
         private List<DataScript> scripts = new List<DataScript>();
+        private List<Project> projectList = new List<Project>();
 
         void DataScriptInfo_Loaded(object sender, RoutedEventArgs e)
         {
@@ -55,7 +56,7 @@ namespace DataImport.Interactive.DataScriptInteractive2
                 });
             }
 
-            var projectList = WebHelper.listProject(MainWindow.UserName);
+            projectList = WebHelper.listProject(MainWindow.UserName);
             ProjectCode.ItemsSource = projectList;
             ProjectCode.DisplayMemberPath = "ProjectName";
             ProjectCode.SelectedValuePath = "ProjectCode";
@@ -84,9 +85,16 @@ namespace DataImport.Interactive.DataScriptInteractive2
         }
 
         private void ProjectCode_KeyUp(object sender, KeyEventArgs e)
-        {
-            List<Project> list = ProjectCode.ItemsSource as List<Project>; 
-            ProjectCode.ItemsSource = list.Where((i) => i.ProjectName.Contains(ProjectCode.Text.Trim())); 
+        {  
+            if (ProjectCode.Text!=null && (!string.IsNullOrEmpty(ProjectCode.Text)))
+                ProjectCode.ItemsSource = projectList.Where((i) => i.ProjectName.Contains(ProjectCode.Text.Trim()));
+
+            if (ProjectCode.Text == null || string.IsNullOrEmpty(ProjectCode.Text)) {
+                ProjectCode.ItemsSource = projectList;
+            }
+            ProjectCode.DisplayMemberPath = "ProjectName";
+            ProjectCode.SelectedValuePath = "ProjectCode";
+
             ProjectCode.IsDropDownOpen = true;
         }
 
@@ -573,19 +581,26 @@ namespace DataImport.Interactive.DataScriptInteractive2
 
         private void ProjectCode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            showVersion();
-            if (string.IsNullOrEmpty(FID))
-            {
-                getTableName();
+            try {
+                if (ProjectCode.SelectedValue == null) { return; }
 
+                showVersion();
+                if (string.IsNullOrEmpty(FID))
+                {
+                    getTableName();
+
+                }
+                string projectcode = ProjectCode.SelectedValue.ToString();
+                List<string> list = scripts.Where(it => it.ProjectCode == projectcode).Select(it => it.TaskName).ToList().Distinct().ToList();
+                list.Insert(0, "新增试验");
+
+                TaskNameList.ItemsSource = list;
+                TaskNameList.KeyUp += TaskNameList_KeyUp;
+                getScriptCode();
             }
-            string projectcode = ProjectCode.SelectedValue.ToString();
-            List<string> list = scripts.Where(it => it.ProjectCode == projectcode).Select(it => it.TaskName).ToList().Distinct().ToList();
-            list.Insert(0, "新增试验");
-
-            TaskNameList.ItemsSource = list;
-            TaskNameList.KeyUp += TaskNameList_KeyUp;
-            getScriptCode();
+            catch (System.Exception ex) {
+            }
+            
         }
 
         private void TaskNameList_KeyUp(object sender, KeyEventArgs e)
@@ -618,20 +633,26 @@ namespace DataImport.Interactive.DataScriptInteractive2
 
         private void TaskNameList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TaskNameList.SelectedIndex == 0)
+            try
             {
-                TaskName.Text = "";
-                TaskName.IsEnabled = true;
-                getScriptCode();
-            }
-            else
-            {
-                if (TaskNameList.SelectedItem != null)
+                if (TaskNameList.SelectedValue == null) { return; }
+
+                if (TaskNameList.SelectedIndex == 0)
                 {
-                    TaskName.Text = TaskNameList.SelectedItem.ToString();
-                    TaskName.IsEnabled = false;
+                    TaskName.Text = "";
+                    TaskName.IsEnabled = true;
+                    getScriptCode();
+                }
+                else
+                {
+                    if (TaskNameList.SelectedItem != null)
+                    {
+                        TaskName.Text = TaskNameList.SelectedItem.ToString();
+                        TaskName.IsEnabled = false;
+                    }
                 }
             }
+            catch (System.Exception ex) { }
         }
         // 计算主键
     }

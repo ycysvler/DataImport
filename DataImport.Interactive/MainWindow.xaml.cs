@@ -95,12 +95,11 @@ namespace DataImport.Interactive
 
                 window.StartPage(item);
             }
-
-            
+              
+            // 打开测试页面
+            //(App.Current.MainWindow as MainWindow).StartPage(new TestControl());
         }
-
         
-
         private void Close_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (SequencesView != null)
