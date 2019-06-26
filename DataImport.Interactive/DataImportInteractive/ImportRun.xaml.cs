@@ -154,6 +154,24 @@ namespace DataImport.Interactive.DataImportInteractive
 
         private void Bl_CompleteEvent(object sender, BatchInteractive.CompleteArgs e)
         {
+            string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
+                    System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                         System.IO.Path.GetFileName(sourceFile));
+
+            System.IO.FileInfo objFI = new System.IO.FileInfo(sourceFile);
+            string fileSize = objFI.Length.ToString();
+
+            ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog()
+            {
+                FileName = serverpath,
+                CreatedBy = MainWindow.UserName,
+                Content = e.Message.Replace("\r\n", "<br />"),
+                ProjectCode = DataScript.ProjectCode,
+                TaskCode = TaskCenter.CurrentInfo.taskCode,
+                Times = TaskCenter.TaskTimes.ToString(),
+                FileSize = fileSize 
+            });
+
             Dispatcher.BeginInvoke((Delegate)new Action(() =>
             {
                 title.Text = string.Format("数据导入完成");

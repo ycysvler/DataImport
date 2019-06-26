@@ -129,8 +129,7 @@ namespace DataImport.Interactive.BatchInteractive
         }
 
         private void Bl_CompleteEvent(object sender, CompleteArgs e)
-        {
-            
+        {            
             Dispatcher.BeginInvoke((Delegate)new Action(() =>
             {
                 Paragraph paragraph = new Paragraph();
