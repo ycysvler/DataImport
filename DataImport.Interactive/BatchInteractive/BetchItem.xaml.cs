@@ -150,6 +150,7 @@ namespace DataImport.Interactive.BatchInteractive
 
                 ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog() {
                     FileName = serverpath,
+                    ScriptCode = scriptCode,
                     CreatedBy = MainWindow.UserName,
                     Content = tr.Text.Replace("\r\n", "<br />"),
                     ProjectCode = projectCode,

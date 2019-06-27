@@ -164,6 +164,7 @@ namespace DataImport.Interactive.DataImportInteractive
             ImportLogDAL.Insert(new DataAccess.Entitys.ImportLog()
             {
                 FileName = serverpath,
+                ScriptCode = DataScript.MidsScriptCode,
                 CreatedBy = MainWindow.UserName,
                 Content = e.Message.Replace("\r\n", "<br />"),
                 ProjectCode = DataScript.ProjectCode,
