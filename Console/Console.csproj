@@ -58,6 +58,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataImport.BLL\DataImport.BLL.csproj">
+      <Project>{2ff4544d-9598-4d72-9897-b2f3a2c70f63}</Project>
+      <Name>DataImport.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataImport.DataAccess\DataImport.DataAccess.csproj">
       <Project>{483302cd-bc48-43e9-8463-5ab1a001a647}</Project>
       <Name>DataImport.DataAccess</Name>

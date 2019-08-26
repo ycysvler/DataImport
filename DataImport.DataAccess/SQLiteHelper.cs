@@ -19,6 +19,36 @@ namespace DataImport.DataAccess
             this.log = log4net.LogManager.GetLogger("Logger");
         }
 
+        public List<string> TableNames() {
+            DataSet ds = this.Query("select name from sqlite_master where type='table' order by name");
+
+            List<string> result = new List<string>();
+
+            foreach (DataRow dr in ds.Tables[0].Rows) {
+                result.Add(dr["name"].ToString());
+            }
+
+            return result;
+        }
+
+        public DataTable GetReaderSchema(string tableName)
+        {
+            DataTable schemaTable = null;
+            IDbCommand cmd = new SQLiteCommand();
+            cmd.CommandText = string.Format("select * from [11时19分17秒088_A]", tableName);
+             
+            using (SQLiteConnection conn = new SQLiteConnection("data source=" + dbPath)) {
+                conn.Open();
+                cmd.Connection = conn;
+                using (IDataReader reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
+                {
+                    schemaTable = reader.GetSchemaTable();
+                }
+            }
+             
+            return schemaTable;
+        }
+
         public DataSet Query(string sql) {
             try
             {
