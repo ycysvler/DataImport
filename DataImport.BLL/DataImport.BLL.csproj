@@ -75,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SQLiteImportHelper.cs" />
     <Compile Include="TextImportHelper.cs" />
     <Compile Include="WebHelper.cs" />
   </ItemGroup>

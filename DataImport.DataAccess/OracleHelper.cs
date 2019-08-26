@@ -83,7 +83,7 @@ namespace DataImport.DataAccess
 
                     return sqlList.Count;
                 }
-                catch (System.Data.OracleClient.OracleException e)
+                catch 
                 {
                     tx.Rollback();
                     return 0;

@@ -516,7 +516,7 @@ namespace DataImport.Interactive
                 //    successCount += dataTable.Rows.Count;
                 //}
             }
-            catch (System.Exception ex)
+            catch 
             {
 
             }
