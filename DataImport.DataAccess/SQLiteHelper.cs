@@ -35,7 +35,7 @@ namespace DataImport.DataAccess
         {
             DataTable schemaTable = null;
             IDbCommand cmd = new SQLiteCommand();
-            cmd.CommandText = string.Format("select * from [11时19分17秒088_A]", tableName);
+            cmd.CommandText = string.Format("select * from [{0}]", tableName);
              
             using (SQLiteConnection conn = new SQLiteConnection("data source=" + dbPath)) {
                 conn.Open();
@@ -65,6 +65,14 @@ namespace DataImport.DataAccess
                 throw ex;
             }
         }
+
+        public DataTable getAllDataTable(string tableName) {
+            string sql = string.Format("select * from [{0}]", tableName);
+            DataSet ds = Query(sql);
+
+            return ds.Tables[0];
+        }
+
 
         public int Excuse(string sql)
         { 

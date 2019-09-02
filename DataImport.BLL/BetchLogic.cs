@@ -258,6 +258,9 @@ namespace DataImport.BLL
 
             switch (fileType)
             {
+                case ".db":
+                    inputOk = sqlite2db();
+                    break;
                 case ".xls":
                 case ".xlsx":
                     inputOk = xls2db();
@@ -393,6 +396,20 @@ namespace DataImport.BLL
             return result;
         }
 
+        private bool sqlite2db() {
+            SQLiteHelper helper = new SQLiteHelper(this.sourceFile);
+            var dbTableNames = helper.TableNames();
+            var trTableNames = this.dataScript.TableNameExt.Split(',');
+
+            for (int i = 0; i < dbTableNames.Count && i < trTableNames.Length; i++) {
+                DataTable dt = helper.getAllDataTable(dbTableNames[i]);
+                bool result = insertDataTable(dt, structList, trTableNames[i]);
+                if (!result)
+                    return result;
+            } 
+            return true;
+        }
+
         private Dictionary<string, string> getColumnMap()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
@@ -469,6 +486,11 @@ namespace DataImport.BLL
             dataLog.TestProjectID = this.taskInfo.id;// ProjectList.FID;
             dataLog.ImpFileName = impFileName;
             dataLog.ObjectTable = this.dataScriptRule.DesTable;
+            // 被怀疑是sqlite导入
+            if (this.dataScript.TableNameExt.Trim().Length > 0) {
+                dataLog.ObjectTable = this.dataScript.TableNameExt;
+            }
+            
             dataLog.LastUpdatedBy = this.userID;
             dataLog.CreatedBy = this.userID;
             dataLog.LastUpdateIp = "127.0.0.1";

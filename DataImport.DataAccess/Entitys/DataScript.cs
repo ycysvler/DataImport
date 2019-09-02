@@ -48,6 +48,13 @@ namespace DataImport.DataAccess.Entitys
         /// TABLE_NAME：目标表
         /// </summary>
         public string TableName { get; set; }
+
+        /// <summary>
+        /// TABLE_NAME：如果是sqlite, 那么这里有3个表名字
+        /// </summary>
+        public string TableNameExt { get; set; }
+
+
         public string Release { get; set; }
         public string ReleaseText {
             get {
@@ -101,7 +108,11 @@ namespace DataImport.DataAccess.Entitys
             if (row["INVALID"] != DBNull.Value) {
                 result.Invalid = Convert.ToInt32( row["INVALID"].ToString());
             }
-            
+            if (row["TABLE_NAMEEXT"] != DBNull.Value)
+            {
+                result.TableNameExt = row["TABLE_NAMEEXT"].ToString();
+            }
+
             return result;
         }
     }

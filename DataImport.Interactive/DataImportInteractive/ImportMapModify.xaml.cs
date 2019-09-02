@@ -44,6 +44,10 @@ namespace DataImport.Interactive.DataImportInteractive
                 AccessImportHelper helper = new AccessImportHelper(sourceFile);
                 columnConnection.Source = helper.getDataTable();
             }
+            else if (DataScript.FileType == "db")
+            {
+                columnConnection.Source = SQLiteImportHelper.GetDataTable(sourceFile);
+            }
             else if (DataScript.FileType == "xls/xlsx")
             {
                 columnConnection.Source = ExcelImportHelper.GetDataTable(sourceFile);

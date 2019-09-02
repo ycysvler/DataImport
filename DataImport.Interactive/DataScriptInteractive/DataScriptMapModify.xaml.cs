@@ -51,16 +51,21 @@ namespace DataImport.Interactive.DataScriptInteractive
             // columnConnection.Source = TextImportHelper.GetDataTable(@"G:\workspace\动控实现数据管理\src\TestData\data.txt", ',');
             //columnConnection.Target = TableDAL.getTableStructure("MDS_IMP_DATA_TEST");
 
-            if (DataScript.FileType == "mdb") {
+            if (DataScript.FileType == "mdb")
+            {
                 AccessImportHelper helper = new AccessImportHelper(this.DataScriptRule.DesFile);
                 columnConnection.Source = helper.getDataTable();
             }
+            else if (DataScript.FileType == "db") {
+                columnConnection.Source = SQLiteImportHelper.GetDataTable(this.DataScriptRule.DesFile);
+            }
             else if (DataScript.FileType == "xls/xlsx")
             {
-                columnConnection.Source = ExcelImportHelper.GetDataTable(this.DataScriptRule.DesFile); 
+                columnConnection.Source = ExcelImportHelper.GetDataTable(this.DataScriptRule.DesFile);
             }
-            else {
-                columnConnection.Source = TextImportHelper.GetDataTable(this.DataScriptRule.DesFile, this.DataScriptRule.getColSeperatorChar()); 
+            else
+            {
+                columnConnection.Source = TextImportHelper.GetDataTable(this.DataScriptRule.DesFile, this.DataScriptRule.getColSeperatorChar());
             }
 
             columnConnection.FID = FID;

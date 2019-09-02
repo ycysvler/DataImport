@@ -65,9 +65,9 @@ namespace DataImport.Interactive.BatchInteractive
                 CompleteEvent(this, new CompleteArgs() { Message = "数据导入失败" });
                 return false;
             }
-
+             
             this.taskInfo = taskInfoList.FirstOrDefault(it => it.projectCode == projectCode && it.taskCode == taskCode);
-
+              
             if (taskInfo == null)
             {
                 SendMessageEvent(false, string.Format("任务[{0}],不存在", taskCode));

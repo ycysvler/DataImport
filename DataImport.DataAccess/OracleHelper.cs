@@ -22,7 +22,8 @@ namespace DataImport.DataAccess
             {
                 log.Debug(string.Format("\t{0}", sql));
                 DataSet result = new DataSet();
-                OracleDataAdapter adapter = new OracleDataAdapter(sql, ConfigurationManager.ConnectionStrings["oracle"].ConnectionString);
+                string connString = ConfigurationManager.ConnectionStrings["oracle"].ConnectionString;
+                OracleDataAdapter adapter = new OracleDataAdapter(sql, connString);
 
                 adapter.Fill(result);
                 return result;

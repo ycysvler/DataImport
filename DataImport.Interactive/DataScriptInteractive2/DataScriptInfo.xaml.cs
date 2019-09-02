@@ -190,7 +190,7 @@ namespace DataImport.Interactive.DataScriptInteractive2
             {
                 erromsg += "请选择样例文件！\r\n";
             }
-            else if (FileType.SelectedValue.ToString() != "xls/xlsx" && FileType.SelectedValue.ToString() != "mdb")
+            else if (FileType.SelectedValue.ToString() != "xls/xlsx" && FileType.SelectedValue.ToString() != "mdb" && FileType.SelectedValue.ToString() != "db")
             {
                 string[] columns = TextImportHelper.GetColumns(txtTemplageFile.Text, DataScriptRule.getColSeperatorChar(GetColSperator()));
                 if (columns.Length < 2)
@@ -219,6 +219,16 @@ namespace DataImport.Interactive.DataScriptInteractive2
             dScript.TableName = txtTableName.Text;
             dScript.ProjectCode = ProjectCode.SelectedValue.ToString();
             dScript.TaskName = TaskName.Text.Trim();
+
+            // 这是sqlitedb格式，需要计算tablenameex
+            if (FileType.SelectedValue.ToString() == "db") {
+                int count = SQLiteImportHelper.GetTableNames(txtTemplageFile.Text).Count();
+                string tablenames = "";
+                for (int i = 1; i <= count; i++) {
+                    tablenames += string.Format("{0}_{1},", txtTableName.Text, i);
+                }
+                dScript.TableNameExt = tablenames.TrimEnd(',');
+            }
 
             dRule = new DataScriptRule();
 
@@ -261,7 +271,15 @@ namespace DataImport.Interactive.DataScriptInteractive2
                 dRule.MdsImpDataScriptID = dScript.FID;
 
                 insertScript();
+                // 正常表
                 updateTableStructure();
+
+                if (FileType.SelectedValue.ToString() == "db") {
+                    // sqlite 多表
+                    foreach(string tname in dScript.TableNameExt.Split(',')) {
+                        updateTableStructure(tname);
+                    }
+                } 
             }
             else
             {
@@ -271,7 +289,17 @@ namespace DataImport.Interactive.DataScriptInteractive2
                 dRule.MdsImpDataScriptID = dScript.FID;
 
                 insertScript();
+                // 正常表
                 insertTableStructure();
+
+                if (FileType.SelectedValue.ToString() == "db")
+                {
+                    // sqlite 多表,再把多表搞一下。
+                    foreach (string tname in dScript.TableNameExt.Split(','))
+                    {
+                        insertTableStructure(tname);
+                    }
+                } 
             }
 
 
@@ -309,13 +337,15 @@ namespace DataImport.Interactive.DataScriptInteractive2
             DataScriptDAL.update(dScript);
             DataScriptRuleDAL.update(dRule);
         }
-
-        private void updateTableStructure()
+        private void updateTableStructure() {
+            updateTableStructure(dScript.TableName);
+        }
+        private void updateTableStructure(string tableName)
         {
             DataTable dt = GetDataTable(txtTemplageFile.Text);
             // 增加对应关系
 
-            var structures = TableDAL.getTableStructure(dScript.TableName);
+            var structures = TableDAL.getTableStructure(tableName);
 
             int max = getMaxColumnIndex(structures);
 
@@ -329,17 +359,17 @@ namespace DataImport.Interactive.DataScriptInteractive2
                     double d = 0.0;
                     if (double.TryParse(dt.Rows[0][column].ToString(), out d))
                     {
-                        TableDAL.AddColumn(dScript.TableName, "COLUMN" + max.ToString(), "number");
+                        TableDAL.AddColumn(tableName, "COLUMN" + max.ToString(), "number");
                     }
                     else
                     {
-                        TableDAL.AddColumn(dScript.TableName, "COLUMN" + max.ToString(), "string");
+                        TableDAL.AddColumn(tableName, "COLUMN" + max.ToString(), "string");
                     }
-                    TableDAL.Comment(dScript.TableName, "COLUMN" + max.ToString(), column.ColumnName);
+                    TableDAL.Comment(tableName, "COLUMN" + max.ToString(), column.ColumnName);
                 }
             }
 
-            structures = TableDAL.getTableStructure(dScript.TableName);
+            structures = TableDAL.getTableStructure(tableName);
 
             for (int i = 0; i < dt.Columns.Count; i++)
             {
@@ -371,28 +401,31 @@ namespace DataImport.Interactive.DataScriptInteractive2
             DataScriptRuleDAL.Insert(dRule);
         }
 
-        private void insertTableStructure()
+        private void insertTableStructure() {
+            insertTableStructure(txtTableName.Text);
+        }
+        private void insertTableStructure(string tableName)
         {
             DataTable dt = GetDataTable(txtTemplageFile.Text);
 
-            if (scripts.Count(it => it.TableName == txtTableName.Text) == 0)
+            if (scripts.Count(it => it.TableName == tableName) == 0)
             {
                 // 创建表
-                TableDAL.CreateTable(txtTableName.Text, dt);
+                TableDAL.CreateTable(tableName, dt);
                 // 添加主键
                 //TableDAL.SetPrimary(txtTableName.Text, "ID");
                 // 添加扩展列
-                TableDAL.AddAttribute(txtTableName.Text, 20);
+                TableDAL.AddAttribute(tableName, 20);
 
-                int count = ObjtableInfoDAL.Count(txtTableName.Text.ToUpper());
+                int count = ObjtableInfoDAL.Count(tableName.ToUpper());
                 if (count == 0)
                 {
                     ObjtableInfo oinfo = new ObjtableInfo();
                     oinfo.FID = Guid.NewGuid().ToString().Replace("-", "");
                     oinfo.CreatedBy = MainWindow.UserID;
                     oinfo.LastUpdatedBy = MainWindow.UserID;
-                    oinfo.ObjectTableCode = txtTableName.Text.ToUpper();
-                    oinfo.ObjectTableName = txtTableName.Text.ToUpper();
+                    oinfo.ObjectTableCode = tableName.ToUpper();
+                    oinfo.ObjectTableName = tableName.ToUpper();
                     oinfo.Status = "02";
                     oinfo.Version = 1;
                     oinfo.LastUpdateIp = "127.0.0.1";
@@ -404,10 +437,10 @@ namespace DataImport.Interactive.DataScriptInteractive2
             else
             {
                 // 追加表结构
-                TableDAL.CreateTable(txtTableName.Text, dt);
+                TableDAL.CreateTable(tableName, dt);
             }
 
-            DataScriptMapDAL.AutoScriptMap(FID, dt, txtTableName.Text, MainWindow.UserID);
+            DataScriptMapDAL.AutoScriptMap(FID, dt, tableName, MainWindow.UserID);
         }
 
         private string GetColSperator()
@@ -446,6 +479,10 @@ namespace DataImport.Interactive.DataScriptInteractive2
             {
                 dt = ExcelImportHelper.GetDataTable(fileName);
             }
+            else if (FileType.SelectedValue.ToString() == "db")
+            {
+                dt = SQLiteImportHelper.GetDataTable(fileName);
+            }
             else
             {
                 dt = TextImportHelper.GetDataTable(fileName, DataScriptRule.getColSeperatorChar(GetColSperator()));
@@ -473,6 +510,10 @@ namespace DataImport.Interactive.DataScriptInteractive2
             {
                 dialog.Filter = "(数据文件)|*.mdb";
             }
+            if (FileType.SelectedValue.ToString() == "db")
+            {
+                dialog.Filter = "(sqlite文件)|*.db";
+            }
             if (FileType.SelectedValue.ToString() == "fws10")
             {
                 dialog.Filter = "(fws10文件)|*.fws10";
@@ -484,7 +525,7 @@ namespace DataImport.Interactive.DataScriptInteractive2
             {
                 txtTemplageFile.Text = dialog.FileName;
 
-                if (FileType.SelectedValue.ToString() != "xls/xlsx" && FileType.SelectedValue.ToString() != "mdb")
+                if (FileType.SelectedValue.ToString() != "xls/xlsx" && FileType.SelectedValue.ToString() != "mdb" && FileType.SelectedValue.ToString() != "db")
                 {
                     string[] columns = TextImportHelper.GetColumns(txtTemplageFile.Text, DataScriptRule.getColSeperatorChar(GetColSperator()));
                     if (columns.Length < 2)

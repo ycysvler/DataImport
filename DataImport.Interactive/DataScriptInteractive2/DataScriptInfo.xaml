@@ -88,6 +88,7 @@
                         <System:String >mdb</System:String>
                         <System:String >dat</System:String>
                         <System:String >fws10</System:String>
+                        <System:String >db</System:String>
                     </ComboBox>
                     <TextBox  Name="IndexKey" Grid.Column="5" Grid.Row="2" VerticalAlignment="Center"  Text=""/>
                     <TextBox Name="ValidFlag" Grid.Column="3" Grid.Row="3" VerticalAlignment="Center"  Text=""/>

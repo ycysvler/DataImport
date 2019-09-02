@@ -95,13 +95,13 @@ namespace DataImport.DataAccess
         }
 
         public static int Insert(DataScript item) {
-            string sql = string.Format("INSERT INTO MDS_IMP_DATA_SCRIPT(FID,MIDS_SCRIPT_CODE,MIDS_SCRIPT_NAME,MIDS_SCRIPT_VERSION,FILE_TYPE,INDEX_KEY,VALID_FLAG,APPLY_TEST_PROJECT,REMARK,CREATED_BY,CREATION_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE,LAST_UPDATE_IP,VERSION,SCRIPT_TYPE,PROJECT_CODE,TASK_NAME,TABLE_NAME,RELEASE) ");
-            sql += string.Format("VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',to_date('{10}','yyyy/mm/dd hh24:mi:ss'),'{11}',to_date('{12}','yyyy/mm/dd hh24:mi:ss'),'{13}',{14},{15},'{16}','{17}','{18}','01')",
+            string sql = string.Format("INSERT INTO MDS_IMP_DATA_SCRIPT(FID,MIDS_SCRIPT_CODE,MIDS_SCRIPT_NAME,MIDS_SCRIPT_VERSION,FILE_TYPE,INDEX_KEY,VALID_FLAG,APPLY_TEST_PROJECT,REMARK,CREATED_BY,CREATION_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE,LAST_UPDATE_IP,VERSION,SCRIPT_TYPE,PROJECT_CODE,TASK_NAME,TABLE_NAME,RELEASE,TABLE_NAMEEXT) ");
+            sql += string.Format("VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',to_date('{10}','yyyy/mm/dd hh24:mi:ss'),'{11}',to_date('{12}','yyyy/mm/dd hh24:mi:ss'),'{13}',{14},{15},'{16}','{17}','{18}','01','{19}')",
                 item.FID, item.MidsScriptCode, item.MidsScriptName, item.MidsScriptVesion, item.FileType, 
                 item.IndexKey, item.ValidFlag, item.ApplyTestProject, item.Remark, item.CreatedBy, 
                 item.CreationDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdatedBy, 
                 item.LastUpdateDate.ToString("yyyy/MM/dd HH:mm:ss"), item.LastUpdateIp, item.Version, item.ScriptType,item.ProjectCode, 
-                item.TaskName, item.TableName);
+                item.TaskName, item.TableName, item.TableNameExt);
 
             return OracleHelper.Excuse(sql);
         }
@@ -125,6 +125,7 @@ namespace DataImport.DataAccess
             sql += string.Format("PROJECT_CODE='{0}',", item.ProjectCode);
             sql += string.Format("TASK_NAME='{0}',", item.TaskName);
             sql += string.Format("TABLE_NAME='{0}',", item.TableName);
+            sql += string.Format("TABLE_NAMEEXT='{0}',", item.TableNameExt);
             sql += string.Format("INVALID={0},", item.Invalid);
             sql += string.Format("LAST_UPDATE_DATE=to_date('{0}','yyyy/mm/dd hh24:mi:ss')  ", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             sql += string.Format("WHERE FID='{0}' ", item.FID);

@@ -87,6 +87,10 @@ namespace DataImport.Interactive.DataImportInteractive
             {
                 dialog.Filter = "(dat 文件)|*.dat";
             }
+            else if (FileType.SelectedValue.ToString() == "db")
+            {
+                dialog.Filter = "(sqlite 文件)|*.db";
+            }
             else if (FileType.SelectedValue.ToString() == "mdb")
             {
                 dialog.Filter = "(mdb 文件)|*.mdb";
@@ -116,6 +120,10 @@ namespace DataImport.Interactive.DataImportInteractive
                 else if (FileType.SelectedValue.ToString() == "xls/xlsx")
                 {
                     dt = ExcelImportHelper.GetDataTable(dialog.FileName); 
+                }
+                else if (FileType.SelectedValue.ToString() == "db")
+                {
+                    dt = SQLiteImportHelper.GetDataTable(dialog.FileName);
                 }
                 else
                 {

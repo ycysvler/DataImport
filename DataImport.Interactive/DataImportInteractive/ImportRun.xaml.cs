@@ -389,6 +389,15 @@ namespace DataImport.Interactive.DataImportInteractive
                         return;
                     }
                 }
+                else if (fileType == "db")
+                {
+                    dataTable = SQLiteImportHelper.GetDataTable(sourceFile);
+                    if (!checkDataTable(dataTable, structList, pk))
+                    {
+                        MessageBox.Show("数据检查失败，请修正数据后重新导入");
+                        return;
+                    }
+                }
                 else
                 {
 
