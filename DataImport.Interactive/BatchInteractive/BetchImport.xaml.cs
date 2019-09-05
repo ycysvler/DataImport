@@ -51,7 +51,7 @@ namespace DataImport.Interactive.BatchInteractive
                 }
 
                 string ext = System.IO.Path.GetExtension(file);
-                if (ext == ".txt" || ext == ".xls" || ext == ".xlsx" || ext == ".mdb" || ext == ".dat")
+                if (ext == ".db" || ext == ".txt" || ext == ".xls" || ext == ".xlsx" || ext == ".mdb" || ext == ".dat")
                 {
                     string projectCode = "";
                     string taskCode = "";
