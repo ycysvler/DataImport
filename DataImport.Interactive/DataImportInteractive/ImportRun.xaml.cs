@@ -29,6 +29,7 @@ namespace DataImport.Interactive.DataImportInteractive
     /// </summary>
     public partial class ImportRun : UserControl
     {
+         
         public ImportRun()
         {
             InitializeComponent();
@@ -154,9 +155,22 @@ namespace DataImport.Interactive.DataImportInteractive
 
         private void Bl_CompleteEvent(object sender, BatchInteractive.CompleteArgs e)
         {
+            string filename = string.Format("{0}@{1},{2},{3},{4}{5}",
+                            DataScript.ScriptTypeName,
+                            DataScript.ProjectCode,
+                            TaskCenter.CurrentInfo.taskCode,
+                            TaskCenter.ScriptCode,
+                            TaskCenter.TaskTimes,
+                            System.IO.Path.GetExtension(sourceFile));
+
+
+            //string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
+            //        System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+            //             filename);
+
             string serverpath = string.Format(@"{0}\groupTrailDate\{1}",
-                    System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
-                         System.IO.Path.GetFileName(sourceFile));
+                   System.Configuration.ConfigurationManager.AppSettings["deliverpath"],
+                        System.IO.Path.GetFileName(sourceFile));
 
             System.IO.FileInfo objFI = new System.IO.FileInfo(sourceFile);
             string fileSize = objFI.Length.ToString();
@@ -376,101 +390,119 @@ namespace DataImport.Interactive.DataImportInteractive
 
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                if (fileType == "mdb") {
-                    AccessImportHelper helper = new AccessImportHelper(sourceFile);
-                    dataTable = helper.getAllDataTable();
-                }
-                else if (fileType == "xls/xlsx")
-                {
-                    dataTable = ExcelImportHelper.GetDataTable(sourceFile);
-                    if (!checkDataTable(dataTable, structList, pk))
+                try {
+                    if (fileType == "mdb")
                     {
-                        MessageBox.Show("数据检查失败，请修正数据后重新导入");
-                        return;
+                        AccessImportHelper helper = new AccessImportHelper(sourceFile);
+                        dataTable = helper.getAllDataTable();
                     }
-                }
-                else if (fileType == "db")
-                {
-                    dataTable = SQLiteImportHelper.GetDataTable(sourceFile);
-                    if (!checkDataTable(dataTable, structList, pk))
+                    else if (fileType == "xls/xlsx")
                     {
-                        MessageBox.Show("数据检查失败，请修正数据后重新导入");
-                        return;
-                    }
-                }
-                else
-                {
-
-                    char separator = DataScriptRule.getColSeperatorChar();
-                    dataTable = new DataTable();
-                    // 获取列头，创建表结构
-                    string[] columnNames = TextImportHelper.GetColumns(sourceFile, separator);
-
-                    for (int i = 0; i < columnNames.Length; i++)
-                    {
-                        DataColumn col = new DataColumn(columnNames[i].TrimEnd('\n').TrimEnd('\r'));
-                        dataTable.Columns.Add(col);
-                    }
-
-                    StreamReader sr = new StreamReader(sourceFile, Encoding.Default);
-                    sr.ReadLine();
-
-                    int count = 0;
-
-                    while (true)
-                    {
-                        // 读一行数据
-                        string row = sr.ReadLine();
-                        // 空数据，结束读取
-                        if (string.IsNullOrEmpty(row))
+                        dataTable = ExcelImportHelper.GetDataTable(sourceFile);
+                        if (!checkDataTable(dataTable, structList, pk))
                         {
-                            checkDataTable(dataTable, structList, pk);
-                            break;
+                            MessageBox.Show("数据检查失败，请修正数据后重新导入");
+                            return;
+                        }
+                    }
+                    else if (fileType == "db")
+                    {
+                        dataTable = SQLiteImportHelper.GetDataTable(sourceFile);
+                        if (!checkDataTable(dataTable, structList, pk))
+                        {
+                            MessageBox.Show("数据检查失败，请修正数据后重新导入");
+                            return;
+                        }
+                    }
+                    else
+                    {
+
+                        char separator = DataScriptRule.getColSeperatorChar();
+                        dataTable = new DataTable();
+                        // 获取列头，创建表结构
+                        string[] columnNames = TextImportHelper.GetColumns(sourceFile, separator);
+
+                        for (int i = 0; i < columnNames.Length; i++)
+                        {
+                            DataColumn col = new DataColumn(columnNames[i].TrimEnd('\n').TrimEnd('\r'));
+                            dataTable.Columns.Add(col);
                         }
 
-                        // 先拿10行，然后每1000行拿一行
-                        if (count < 10 || count % 1000 == 1)
-                        {
-                            row = row.Trim();
-                            // 根据分隔符取数据
-                            string[] columnDatas = row.Split(separator);
-                            // 创建一个新行
-                            DataRow dr = dataTable.NewRow();
-                            for (int i = 0; i < columnDatas.Length; i++)
-                            {
-                                dr[i] = columnDatas[i];
-                            }
-                            dataTable.Rows.Add(dr);
-                        }
-                        count++;
+                        StreamReader sr = new StreamReader(sourceFile, Encoding.Default);
+                        sr.ReadLine();
 
-                        if (dataTable.Rows.Count >= 10000)
-                        {
-                            if (!checkDataTable(dataTable, structList, pk))
-                            {
-                                sr.Close();
-                                MessageBox.Show("数据检查失败，请修正数据后重新导入");
+                        int count = 0;
 
-                                return;
+                        while (true)
+                        {
+                            // 读一行数据
+                            string row = sr.ReadLine();
+                            // 空数据，结束读取
+                            if (string.IsNullOrEmpty(row))
+                            {
+                                checkDataTable(dataTable, structList, pk);
+                                break;
                             }
 
-                            dataTable.Rows.Clear();
+                            // 先拿10行，然后每1000行拿一行
+                            if (count < 10 || count % 1000 == 1)
+                            {
+                                row = row.Trim();
+                                // 根据分隔符取数据
+                                string[] columnDatas = row.Split(separator);
+                                // 创建一个新行
+                                DataRow dr = dataTable.NewRow();
+                                for (int i = 0; i < columnDatas.Length; i++)
+                                {
+                                    dr[i] = columnDatas[i];
+                                }
+                                dataTable.Rows.Add(dr);
+                            }
+                            count++;
+
+                            if (dataTable.Rows.Count >= 10000)
+                            {
+                                if (!checkDataTable(dataTable, structList, pk))
+                                {
+                                    sr.Close();
+                                    MessageBox.Show("数据检查失败，请修正数据后重新导入");
+
+                                    return;
+                                }
+
+                                dataTable.Rows.Clear();
+                            }
                         }
+                        sr.Close();
+
                     }
-                    sr.Close();
 
+                    Dispatcher.BeginInvoke((Delegate)new Action(() =>
+                    {
+                        btRun.IsEnabled = true;
+                        btRun.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Resources/Buttons/button.png")));
+
+                        title.Text = string.Format("数据检查完毕，请点击导入数据按钮！");
+
+                    }));
+
+                    MessageBox.Show("数据检查完毕，请点击导入数据按钮！");
                 }
+                catch (System.Exception ex) {
+                    LogHelper.WriteLog(ex.ToString());
 
-                Dispatcher.BeginInvoke((Delegate)new Action(() =>
-                {
-                    btRun.IsEnabled = true;
-                    btRun.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Resources/Buttons/button.png")));
+                    Dispatcher.BeginInvoke((Delegate)new Action(() =>
+                    {
+                        btRun.IsEnabled = true;
+                        btRun.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Resources/Buttons/button.png")));
 
-                    title.Text = string.Format("数据检查完毕，请点击导入数据按钮！");
+                        title.Text = string.Format("数据检查未知异常！");
 
-                }));
+                    }));
 
-                MessageBox.Show("数据检查完毕，请点击导入数据按钮！");
+                    MessageBox.Show("数据检查未知异常！");
+                }
+                
             }));
 
             thread.Start();

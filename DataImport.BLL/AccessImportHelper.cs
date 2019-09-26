@@ -134,7 +134,7 @@ namespace DataImport.BLL
             {
                 OleDbCommand cmd = conn.CreateCommand();
 
-                cmd.CommandText = string.Format("select top {1} * from {0}", name, rows);
+                cmd.CommandText = string.Format("select top {1} * from [{0}]", name, rows);
                 conn.Open();
                 OleDbDataReader dr = cmd.ExecuteReader();
 
@@ -184,7 +184,7 @@ namespace DataImport.BLL
             {
                 OleDbCommand cmd = conn.CreateCommand();
 
-                cmd.CommandText = "select * from " + name;
+                cmd.CommandText = string.Format("select * from [{0}]", name);
                 conn.Open();
                 OleDbDataReader dr = cmd.ExecuteReader();
 
@@ -207,12 +207,13 @@ namespace DataImport.BLL
                 }
 
                 dr.Close();
-                cmd.Dispose();
+                cmd.Dispose(); 
             }
-            catch (System.Exception ex)
-            {
+            finally {
                 conn.Close();
             }
+
+             
 
             foreach (DataColumn column in dt.Columns)
             {
@@ -220,7 +221,10 @@ namespace DataImport.BLL
                     column.ColumnName = column.ColumnName == "时间" ? column.ColumnName : name + "." + column.ColumnName.Replace("#", ".");
             }
 
-            dt.Columns.Remove("ID");
+            if (dt.Columns.Contains("ID")) {
+                dt.Columns.Remove("ID");
+            }
+            
 
             return dt;
         }

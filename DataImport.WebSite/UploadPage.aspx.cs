@@ -39,12 +39,17 @@ namespace DataImport.WebSite
                 HttpRuntime.Cache["key"]="";
 
                 string name = Path.GetFileName(file.FileName);
+                file.SaveAs(path + "\\" + name);
 
-                if (this.Request.QueryString["name"] != null)
+                if (this.Request.QueryString["name"] != null && this.Request.QueryString["name"] != name)
+                {
                     name = this.Request.QueryString["name"];
 
 
-                file.SaveAs(path + "\\" + name);
+                    file.SaveAs(path + "\\" + name);
+
+                }
+                    
             }
         }
     }

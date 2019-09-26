@@ -487,9 +487,9 @@ namespace DataImport.BLL
             dataLog.ImpFileName = impFileName;
             dataLog.ObjectTable = this.dataScriptRule.DesTable;
             // 被怀疑是sqlite导入
-            if (this.dataScript.TableNameExt.Trim().Length > 0) {
+            if (this.dataScript.TableNameExt != null && this.dataScript.TableNameExt.Trim().Length > 0) {
                 dataLog.ObjectTable = this.dataScript.TableNameExt;
-            }
+            } 
             
             dataLog.LastUpdatedBy = this.userID;
             dataLog.CreatedBy = this.userID;
