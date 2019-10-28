@@ -165,15 +165,27 @@ namespace DataImport.BLL
                 conn.Close();
             }
 
+            IDictionary<string, string> map = getTableNameMap(getTableNames());
+            name = map[name];
+
             foreach (DataColumn column in dt.Columns)
             {
-                column.ColumnName = column.ColumnName == "时间" ? column.ColumnName : name + "." + column.ColumnName.Replace("#", ".");
+                column.ColumnName = column.ColumnName == "时间" ?  column.ColumnName : name + "." + column.ColumnName.Replace("#", ".");
             }
 
             return dt;
 
         }
 
+        private IDictionary<string, string> getTableNameMap(List<string> tableNames) {
+            List<string> abcds = new List<string>() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"};
+            IDictionary<string, string> result = new Dictionary<string, string>();
+            for (int i = 0; i < tableNames.Count; i++) {
+                result.Add(tableNames[i], abcds[i]);
+            }
+
+            return result;
+        }
         
         public DataTable getDataTable(string name)
         {
@@ -213,7 +225,9 @@ namespace DataImport.BLL
                 conn.Close();
             }
 
-             
+
+            IDictionary<string, string> map = getTableNameMap(getTableNames());
+            name = map[name];
 
             foreach (DataColumn column in dt.Columns)
             {
